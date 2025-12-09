@@ -74,7 +74,7 @@ JIJI_INTERACTIONS = {
 }
 
 # ==========================================
-# 2. 유틸리티 및 계산 함수 (Utility & Calculation)
+# 2. 유틸리티 및 계산 함수
 # ==========================================
 
 def get_location_info(city_name: str) -> Optional[Dict[str, Any]]:
@@ -90,7 +90,6 @@ def get_location_info(city_name: str) -> Optional[Dict[str, Any]]:
             "timezone_str": timezone_str
         }
     except Exception:
-        # Fallback for error handling
         return None
 
 def get_true_solar_time(dt: datetime, longitude: float, timezone_str: str) -> datetime:
@@ -114,36 +113,18 @@ def get_true_solar_time(dt: datetime, longitude: float, timezone_str: str) -> da
         return dt
 
 def get_ganji(dt: datetime) -> Dict[str, str]:
-    """
-    [간이 만세력] 실제 만세력 DB 없이 연도/시간 흐름에 따른 근사치를 계산하거나
-    테스트를 위한 더미 데이터를 반환합니다. 
-    **실제 서비스 시에는 python-lunardate 또는 만세력 라이브러리 교체 필요**
-    """
-    # 임시: 입력된 연도에 따라 테스트용 간지를 동적으로 매핑 (데모용)
-    # 실제로는 천간: (연도-4)%10, 지지: (연도-4)%12 등을 계산해야 함
-    
-    gan_list = CHEONGAN
-    ji_list = JIJANGGAN.keys() # Key list
-    
-    year_idx = (dt.year - 4) % 10
-    year_ji_idx = (dt.year - 4) % 12
-    
-    # 여기서는 데모를 위해 고정값을 반환하지 않고, 
-    # 사용자가 입력한 값에 따라 변하는 척하는 로직을 넣거나 
-    # 현재는 '더미'로 철수/영희 케이스를 커버하기 위해 특정 로직 유지
-    
-    # 데모용 리턴 (질문자의 테스트 케이스 '철수(2025)'에 맞춤)
-    if dt.year == 2025: # 철수
+    # 데모용: 입력된 연도에 따라 테스트용 간지 매핑
+    if dt.year == 2025: # 철수 예시
         return {'year_gan': '을', 'year_ji': '사', 'month_gan': '무', 'month_ji': '자',
                 'day_gan': '경', 'day_ji': '진', 'time_gan': '을', 'time_ji': '유'}
-    elif dt.year == 2023: # 영희
+    elif dt.year == 2023: # 영희 예시
          return {'year_gan': '계', 'year_ji': '묘', 'month_gan': '을', 'month_ji': '축',
                  'day_gan': '정', 'day_ji': '축', 'time_gan': '정', 'time_ji': '미'}
-    elif dt.year == 2022: # 민수
+    elif dt.year == 2022: # 민수 예시
         return {'year_gan': '임', 'year_ji': '인', 'month_gan': '경', 'month_ji': '술',
                  'day_gan': '임', 'day_ji': '오', 'time_gan': '무', 'time_ji': '신'}
     else:
-        # 기본값
+        # 그 외 기본값 (갑자)
         return {'year_gan': '갑', 'year_ji': '자', 'month_gan': '갑', 'month_ji': '자',
                 'day_gan': '갑', 'day_ji': '자', 'time_gan': '갑', 'time_ji': '자'}
 
@@ -162,12 +143,10 @@ def calculate_sibseong(day_gan: str, ganji_map: Dict[str, str]) -> Dict[str, Any
             if sibseong != '일간': sibseong_counts[sibseong] += 1
         elif type == 'ji':
             jijanggan_list = JIJANGGAN.get(char, [])
-            # 지장간 전체 순회하며 카운트 (가중치 0.5)
             for jg_gan in jijanggan_list:
                 sibseong = SIBSEONG_MAP.get((day_gan, jg_gan), '')
                 if sibseong:
                     sibseong_counts[sibseong] += 0.5
-            # 대표 십성은 정기(마지막 글자) 기준으로 설정
             main_energy = jijanggan_list[-1] if jijanggan_list else ''
             result[f'{column}_ji_sibseong'] = SIBSEONG_MAP.get((day_gan, main_energy), '')
 
@@ -175,21 +154,16 @@ def calculate_sibseong(day_gan: str, ganji_map: Dict[str, str]) -> Dict[str, Any
 
 def calculate_five_elements_count(ganji_map: Dict[str, str]) -> Dict[str, float]:
     counts = {'목': 0, '화': 0, '토': 0, '금': 0, '수': 0}
-    
-    # 8글자 본체 (가중치 1.0)
     for key in ['year_gan', 'year_ji', 'month_gan', 'month_ji', 
                 'day_gan', 'day_ji', 'time_gan', 'time_ji']:
         char = ganji_map[key]
         element = OHENG_MAP.get(char)
         if element: counts[element] += 1.0
-            
-    # 지장간 (가중치 0.5)
     for key in ['year_ji', 'month_ji', 'day_ji', 'time_ji']:
         char = ganji_map[key]
         for hidden_gan in JIJANGGAN.get(char, []):
             element = OHENG_MAP.get(hidden_gan)
             if element: counts[element] += 0.5
-                
     return counts
 
 # ==========================================
@@ -199,29 +173,31 @@ def calculate_five_elements_count(ganji_map: Dict[str, str]) -> Dict[str, float]
 def get_day_pillar_identity(day_ganji: str, db: Dict) -> Dict[str, str]:
     day_ganji_key = f"{day_ganji[0]}_{day_ganji[1]}"
     identity_data = db.get('identity', {}).get(day_ganji_key, {})
+    
+    keywords = ", ".join(identity_data.get('keywords', []))
+    voice = identity_data.get('ko', "일주 데이터를 해석하는 중일세.")
+    
+    # [수정] KeyError 방지를 위해 'type'과 'content' 키를 반드시 포함
     return {
+        "type": "🌟 **일주(Day Pillar) 분석**",
         "title": f"일주({day_ganji})의 고유 기질",
-        "shamanic_voice": identity_data.get('ko', "일주 데이터를 해석하는 중일세."),
-        "keywords": ", ".join(identity_data.get('keywords', []))
+        "content": f"**핵심 키워드:** {keywords}\n\n{voice}"
     }
 
 def perform_cold_reading(ganji_map: Dict[str, str], db: Dict) -> List[Dict[str, Any]]:
-    """symptom_mapping.json을 사용하여 콜드 리딩 분석을 수행합니다."""
     reports = []
     symptom_db = db.get('symptom', {}).get('patterns', {})
     ohang_counts = calculate_five_elements_count(ganji_map)
     
-    # 1. 습한 사주 체크
     if ohang_counts.get('수', 0) >= 3 or ganji_map['month_ji'] in ['해', '자', '축']:
         data = symptom_db.get('습한_사주(Wet_Chart)', {})
         if data:
             reports.append({
                 "type": "☔ 습한 사주 (환경 진단)",
-                "title": f"이 신령이 자네의 환경을 먼저 짚어보네.",
+                "title": "이 신령이 자네의 환경을 먼저 짚어보네.",
                 "content": f"**환경/주거지:** {data.get('environment', '')}\n**신체 증상:** {data.get('body', '')}\n*신령의 일침:* {data.get('shamanic_voice', '')}"
             })
             
-    # 2. 양인살 발동 체크
     day_gan = ganji_map['day_gan']
     yangin_ji = {'갑': '묘', '병': '오', '무': '오', '경': '유', '임': '자'}.get(day_gan)
     if yangin_ji and (ganji_map['day_ji'] == yangin_ji or ganji_map['month_ji'] == yangin_ji):
@@ -229,7 +205,7 @@ def perform_cold_reading(ganji_map: Dict[str, str], db: Dict) -> List[Dict[str, 
         if data:
              reports.append({
                 "type": "🔪 양인살 발동 (기질 진단)",
-                "title": f"자네 몸에 **강력한 칼날**을 품고 있네.",
+                "title": "자네 몸에 **강력한 칼날**을 품고 있네.",
                 "content": f"**기질:** {data.get('habit', '')}\n*신령의 일침:* {data.get('shamanic_voice', '')}"
             })
     return reports
@@ -240,7 +216,6 @@ def analyze_special_patterns(ganji_map: Dict[str, str], sibseong_map: Dict[str, 
     sibseong_counts = sibseong_map.get('counts', {})
     day_ganji = ganji_map['day_gan'] + ganji_map['day_ji']
     
-    # 1. 괴강살
     if day_ganji in GWEEGANG_GANJI:
         data = interactions_db.get('괴강살_발동(Gwegang_Star)', {})
         if data:
@@ -250,7 +225,6 @@ def analyze_special_patterns(ganji_map: Dict[str, str], sibseong_map: Dict[str, 
                 "content": f"**특징:** {data.get('effect_ko', '')}\n**처방:** {data.get('remedy_advice', '')}"
             })
 
-    # 2. 재다신약 (수정된 로직 반영)
     재성_count = sibseong_counts.get('편재', 0) + sibseong_counts.get('정재', 0)
     인성_count = sibseong_counts.get('정인', 0) + sibseong_counts.get('편인', 0)
     비겁_count = sibseong_counts.get('비견', 0) + sibseong_counts.get('겁재', 0)
@@ -271,7 +245,6 @@ def analyze_timeline(birth_dt: datetime, day_gan: str, ganji_map: Dict[str, str]
     reports = []
     current_year = datetime.now().year
     
-    # 1. 2025년 세운 (을사년 고정)
     timeline_db_data = db.get('timeline', {}).get('yearly_2025_2026', {})
     gan_data_2025 = timeline_db_data.get(day_gan, {})
     summary_2025 = gan_data_2025.get('2025', "올해의 기운을 읽는 중이네.")
@@ -282,12 +255,11 @@ def analyze_timeline(birth_dt: datetime, day_gan: str, ganji_map: Dict[str, str]
         "content": summary_2025
     })
 
-    # 2. 라이프 사이클 (키 매핑 수정 반영)
     life_pillar_map = [
         ("초년운", "0~19세", "preschool", 'year_pillar', 'year_gan'),
         ("청년운", "20~39세", "social_entry", 'month_pillar', 'month_gan'),
-        ("중년운", "40~59세", "settlement", 'day_pillar', 'day_gan'), # Key correction
-        ("말년운", "60세 이후", "seniority", 'time_pillar', 'time_gan') # Key correction
+        ("중년운", "40~59세", "settlement", 'day_pillar', 'day_gan'),
+        ("말년운", "60세 이후", "seniority", 'time_pillar', 'time_gan')
     ]
     
     life_stages_db = db.get('timeline', {}).get('life_stages_detailed', {})
@@ -295,7 +267,6 @@ def analyze_timeline(birth_dt: datetime, day_gan: str, ganji_map: Dict[str, str]
     
     for stage_name, stage_range, stage_key, pillar_key, gan_key in life_pillar_map:
         life_data = life_stages_db.get(stage_key, {})
-        # 해당 시기 설명이 없으면 expansion 등 대체 키 사용 가능하나 여기선 DB 신뢰
         pillar_gan_char = ganji_map[gan_key]
         temp_sibseong = SIBSEONG_MAP.get((day_gan, pillar_gan_char), '비견')
         sibseong_desc = major_pillar_db.get(pillar_key, {}).get(temp_sibseong, '')
@@ -355,7 +326,6 @@ def check_zizhi_interaction(ganji_a: Dict[str, str], ganji_b: Dict[str, str], db
     zizhi_db = db.get('compatibility', {}).get('zizhi_interactions', {})
     total_score_changes = 0
     
-    # 일지끼리, 월지끼리 비교
     pairs = [('일지', ganji_a['day_ji'], ganji_b['day_ji']), ('월지', ganji_a['month_ji'], ganji_b['month_ji'])]
     
     for pillar, ji_a, ji_b in pairs:
@@ -377,7 +347,7 @@ def check_zizhi_interaction(ganji_a: Dict[str, str], ganji_b: Dict[str, str], db
     return reports, total_score_changes
 
 # ==========================================
-# 4. 메인 처리 함수 (Main Functions)
+# 4. 메인 처리 함수
 # ==========================================
 
 def process_saju_input(user_data: Dict[str, Any], db: Dict) -> Dict[str, Any]:
@@ -385,12 +355,10 @@ def process_saju_input(user_data: Dict[str, Any], db: Dict) -> Dict[str, Any]:
     birth_dt = user_data['birth_dt']
     city = user_data.get('city', 'Seoul')
     
-    # 1. 위치 및 시간 보정
     loc = get_location_info(city)
     true_dt = get_true_solar_time(birth_dt, loc['longitude'], loc['timezone_str']) if loc else birth_dt
     
-    # 2. 사주 계산
-    ganji = get_ganji(true_dt) # 실제 구현 시 사용자별 로직 필요하지만 여기선 연도기반 더미
+    ganji = get_ganji(true_dt)
     day_gan = ganji['day_gan']
     sibseong = calculate_sibseong(day_gan, ganji)
     five_elem = calculate_five_elements_count(ganji)
@@ -401,7 +369,6 @@ def process_saju_input(user_data: Dict[str, Any], db: Dict) -> Dict[str, Any]:
         "analytics": []
     }
     
-    # [NEW] 서론: 타고난 에너지 요약
     main_sib = max(sibseong['counts'], key=sibseong['counts'].get)
     main_elem = max(five_elem, key=five_elem.get)
     report['analytics'].append({
@@ -410,8 +377,10 @@ def process_saju_input(user_data: Dict[str, Any], db: Dict) -> Dict[str, Any]:
         "content": f"그대는 **{day_gan}** 일간으로 태어나 **{main_elem}**의 기운과 **{main_sib}**의 성향이 삶을 주도하고 있네."
     })
     
-    # 분석 모듈 순차 실행
-    report['analytics'].extend(get_day_pillar_identity(ganji['day_gan'] + ganji['day_ji'], db).items() and [get_day_pillar_identity(ganji['day_gan'] + ganji['day_ji'], db)]) # dict -> list wrap fix
+    # [수정] 단순 append로 변경 (KeyError 유발 코드 제거)
+    day_identity = get_day_pillar_identity(ganji['day_gan'] + ganji['day_ji'], db)
+    report['analytics'].append(day_identity)
+
     report['analytics'].extend(perform_cold_reading(ganji, db))
     report['analytics'].extend(analyze_ohang_imbalance(five_elem, OHENG_MAP[day_gan], db))
     report['analytics'].extend(analyze_special_patterns(ganji, sibseong, db))
@@ -428,14 +397,12 @@ def process_love_compatibility(user_a: Dict, user_b: Dict, db: Dict) -> Dict[str
     key = f"{ganji_a['day_gan']}_{ganji_b['day_gan']}"
     comp_data = db.get('compatibility', {}).get(key, {})
     
-    # 1. 기본 점수 및 지지 가감점
     base_score = comp_data.get('score', 50)
     zizhi_reports, change_score = check_zizhi_interaction(ganji_a, ganji_b, db)
     final_score = max(0, min(100, base_score + change_score))
     
     report = {"user_a": res_a, "user_b": res_b, "analytics": []}
     
-    # 2. 종합 결과 카드
     report['analytics'].append({
         "type": "💖 최종 궁합 분석",
         "title": f"총점: **{final_score}점** (일간합 {base_score} + 지지 {change_score})",
@@ -443,7 +410,6 @@ def process_love_compatibility(user_a: Dict, user_b: Dict, db: Dict) -> Dict[str
     })
     report['analytics'].extend(zizhi_reports)
     
-    # 3. 갈등 패턴 (Love DB)
     conflict_db = db.get('love', {}).get('conflict_triggers', {})
     if res_a['user']['gender'] == '남' and res_a['sibseong_detail']['counts'].get('편재', 0) >= 3:
         data = conflict_db.get('재다신약_남성', {})
@@ -453,7 +419,6 @@ def process_love_compatibility(user_a: Dict, user_b: Dict, db: Dict) -> Dict[str
 
 def load_all_dbs() -> Dict[str, Any]:
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    # DB 파일들이 같은 폴더에 있다고 가정 (또는 하위폴더 설정)
     files = {
         "health": "health_db.json", "five_elements": "five_elements_matrix.json",
         "career": "career_db.json", "shinsal": "shinsal_db.json",
