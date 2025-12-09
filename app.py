@@ -2,7 +2,6 @@ import streamlit as st
 from datetime import datetime
 import time
 import pandas as pd
-# [중요] saju_engine 모듈 임포트
 try:
     import saju_engine
 except ImportError:
@@ -19,14 +18,30 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# CSS Injection (Mobile First & Card UI)
+# [수정] CSS Injection: 글자색(Color)을 강제로 검은색(#333333)으로 지정
 st.markdown("""
 <style>
     .stApp { background-color: #f7f9fc; font-family: 'Noto Sans KR', sans-serif; }
     div.stButton > button { width: 100%; border-radius: 12px; font-weight: bold; background-color: #4a148c; color: white; }
     div.stButton > button:hover { background-color: #7c43bd; color: white; }
-    .report-card { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; border-left: 5px solid #4a148c; }
-    .highlight { color: #4a148c; font-weight: bold; }
+    
+    /* 카드 UI 수정: 배경은 흰색, 글씨는 무조건 검은색 */
+    .report-card { 
+        background-color: white !important; 
+        padding: 20px; 
+        border-radius: 15px; 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+        margin-bottom: 15px; 
+        border-left: 5px solid #4a148c; 
+        color: #333333 !important; /* 기본 글자색 검정 */
+    }
+    
+    /* 카드 내부의 모든 텍스트 요소 강제 색상 지정 */
+    .report-card h3, .report-card h4, .report-card p, .report-card div {
+        color: #333333 !important;
+    }
+
+    .highlight { color: #4a148c !important; font-weight: bold; }
     h1, h2, h3 { color: #333; }
 </style>
 """, unsafe_allow_html=True)
@@ -154,7 +169,7 @@ if st.session_state.report:
             with st.chat_message("assistant"):
                 msg_placeholder = st.empty()
                 full_response = ""
-                # Dummy Response for Demo (실제 Groq 연동 필요 시 여기에 작성)
+                # Dummy Response for Demo
                 dummy_ans = f"허허, '{prompt}'라... 자네 사주에 따르면 지금은 때가 아니야. 조금 더 기다리면 길이 보일 걸세."
                 
                 for chunk in dummy_ans.split():
