@@ -6,4 +6,4 @@ timezonefinder
 pytz
 google-auth
 gspread
-groq
+oauth2client
