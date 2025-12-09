@@ -4,6 +4,6 @@ ephem
 geopy
 timezonefinder
 pytz
-google-auth
+groq
 gspread
-oauth2client
+google-auth
