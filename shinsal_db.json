@@ -1,7 +1,7 @@
 {
   "meta": {
     "desc": "신살의 기본 정의 및 운의 간섭(충/형/공망)에 따른 상호작용 데이터",
-    "version": "2.0 (Shinryeong Edition)"
+    "version": "2.1 (Shinryeong Edition - Risk Enhanced)"
   },
   "basic_meanings": {
     "역마살(Stationary_Horse)": {
@@ -22,7 +22,7 @@
     "양인살(Sheep_Blade)": {
       "desc": "권력, 프로페셔널, 수술, 강력한 리더십.",
       "positive": "의사, 군인, 경찰, 생살여탈권을 쥔 직업.",
-      "negative": "독단적 성격, 배우자 극함, 신체 부상."
+      "negative": "독단적 성격, 배우자 극함, 신체 부상, 잦은 수술수(Operation Risk)."
     },
     "귀문관살(Ghost_Gate)": {
       "desc": "천재성, 예민함, 영감, 신경과민.",
