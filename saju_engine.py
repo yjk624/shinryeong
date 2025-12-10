@@ -295,12 +295,26 @@ def calculate_five_elements(saju_pillars: Dict[str, str]) -> Dict[str, Any]:
 # ==========================================
 
 # A. 🔮 타고난 에너지 요약
+# [saju_engine.py] 수정본
+
+# ==========================================
+# 4. 스토리텔링 생성기 (Narrative Generator) - 수정됨
+# ==========================================
+
+# A. 🔮 타고난 에너지 요약 (수정: weighted 데이터 참조)
 def generate_intro_summary(saju_pillars, oheng_counts, sibseong_data, db):
     day_gan = saju_pillars['day_gan']
     day_ji = saju_pillars['day_ji']
     
-    simple_oheng_counts = {k: v for k, v in oheng_counts.items() if k not in ['토_습', '토_조']}
-    main_elem = max(simple_oheng_counts, key=simple_oheng_counts.get)
+    # [수정] 오행 카운트가 V2.2에서 이중 딕셔너리로 변경되었으므로 'weighted'를 참조해야 함
+    # weighted 딕셔너리를 가져옴
+    target_counts = oheng_counts['weighted']
+    
+    # 총 토 카운트('토_습', '토_조' 제외)를 포함한 카운트에서 최대 오행 찾기
+    # 단순화: 목, 화, 토, 금, 수 5개 중에서 비교 (토_습/토_조 합산된 '토' 사용)
+    compare_set = {k: v for k, v in target_counts.items() if k in ['목', '화', '토', '금', '수']}
+    
+    main_elem = max(compare_set, key=compare_set.get)
     main_sibseong = max(sibseong_data['group_counts'], key=sibseong_data['group_counts'].get)
     
     identity_key = f"{day_gan}_{day_ji}"
@@ -309,31 +323,38 @@ def generate_intro_summary(saju_pillars, oheng_counts, sibseong_data, db):
 
     story = f"그대는 **{day_gan}** 일간으로 태어났으며, 사주 전반에 **{main_elem}** 기운과 **{main_sibseong}**의 성향이 가장 강하게 지배하고 있네. 이 기운이 자네의 삶을 이끌어갈 중심 축이니 잘 새겨듣게."
     
-    if main_elem == '금': story += f"마치 가을 산의 거대한 바위처럼 냉철하고 맺고 끊음이 확실한 결단력을 가졌구먼. "
-    elif main_elem == '토': story += f"넓은 대지처럼 포용력이 있으나, 한번 고집을 부리면 산처럼 움직이지 않는구먼. "
+    if main_elem == '금': story += f" 마치 가을 산의 거대한 바위처럼 냉철하고 맺고 끊음이 확실한 결단력을 가졌구먼. "
+    elif main_elem == '토': story += f" 넓은 대지처럼 포용력이 있으나, 한번 고집을 부리면 산처럼 움직이지 않는구먼. "
     
     story += f"특히 자네의 본원(자아)인 일주(**{day_gan}{day_ji}**)를 보니, **'{main_keyword}'**의 키워드가 자네의 무의식을 지배하고 있어."
     return story
 
-# B. 👤 일주(日柱) 기질 분석
+# B. 👤 일주(日柱) 기질 분석 (변경 없음 - 그대로 유지)
 def generate_identity_analysis(saju_pillars, db):
     key = f"{saju_pillars['day_gan']}_{saju_pillars['day_ji']}"
     data = get_db_content(db, 'identity', key)
     
     if not data: return "데이터가 희미하네. 하지만 자네는 특별한 기운을 가졌어."
 
-    story = f"**{saju_pillars['day_gan']}** 일간인 그대는 **{data.get('ko').split('.')[0]}.**"
-    story += f" {data.get('ko')}. "
+    story = f"**{saju_pillars['day_gan']}** 일간인 그대는 **{data.get('ko', '').split('.')[0]}.**"
+    story += f" {data.get('ko', '')}. "
     story += f"자네는 **[{', '.join(data.get('keywords', []))}]**의 성향이 강하니, "
     story += "남들이 흉내 낼 수 없는 자네만의 무기이자, 동시에 자네를 힘들게 하는 족쇄가 될 수도 있음을 명심하게."
     return story
 
-# C. ☔ 환경 및 건강 진단 (콜드 리딩) - Rule 10 구현
+# C. ☔ 환경 및 건강 진단 (수정: weighted 데이터 참조)
 def generate_health_diagnosis(oheng_counts, saju_pillars, db):
-    is_dry_hot = (oheng_counts.get('화', 0) >= 3.0) or \
-                 (oheng_counts.get('화', 0) + oheng_counts.get('토_조', 0) >= 4.0)
-    is_cold_wet = (oheng_counts.get('수', 0) >= 3.0) or \
-                  (oheng_counts.get('수', 0) + oheng_counts.get('토_습', 0) >= 4.0)
+    # [수정] weighted 데이터를 기준으로 판단
+    target = oheng_counts['weighted']
+    
+    # 조열 판단: 화(火) 점수 3.0 이상 OR (화 + 토_조) 점수가 높을 때
+    fire_score = target.get('화', 0)
+    dry_earth = target.get('토_조', 0)
+    water_score = target.get('수', 0)
+    wet_earth = target.get('토_습', 0)
+
+    is_dry_hot = (fire_score >= 3.0) or (fire_score + dry_earth >= 4.0)
+    is_cold_wet = (water_score >= 3.0) or (water_score + wet_earth >= 4.0)
                   
     diag_key = ""
     if is_dry_hot: diag_key = "Dry_Hot_Chart"
@@ -343,18 +364,20 @@ def generate_health_diagnosis(oheng_counts, saju_pillars, db):
     
     if not data: return "자네의 오행은 비교적 조화롭네. 건강은 자네가 지키는 법이지."
 
-    story = f"**☔ {data.get('name')} (환경 진단)** - 이 신령이 자네의 환경을 먼저 짚어보네."
-    story += f"\n* **환경/주거지:** {data.get('environment_cue')}"
+    story = f"**☔ {data.get('name', '건강 진단')} (환경 진단)** - 이 신령이 자네의 환경을 먼저 짚어보네."
+    story += f"\n* **환경/주거지:** {data.get('environment_cue', '')}"
     story += f"\n* **신체 증상:** {', '.join(data.get('physical_symptoms', []))}"
-    story += f"\n* **정서 리스크:** {data.get('emotional_state')}"
+    story += f"\n* **정서 리스크:** {data.get('emotional_state', '')}"
 
     remedy_map = {'Dry_Hot_Chart': 'fire_problem', 'Cold_Wet_Chart': 'water_problem'}
     remedy_key = remedy_map.get(diag_key)
     remedy_data = get_db_content(db, 'health', 'health_remedy', remedy_key)
     
-    story += f"\n\n**신령의 처방:** \"{data.get('shamanic_voice')}\" "
+    story += f"\n\n**신령의 처방:** \"{data.get('shamanic_voice', '')}\" "
     story += f"몸의 기운을 보강하려면, {remedy_data.get('action_remedy', '규칙적인 생활을')}."
     return story
+
+# (나머지 함수 D~I 및 generate_special_risks 등은 변경 없음)
 
 # D. ⚔️ 특수 살성 및 리스크 (괴강, 재다신약 등) - Rule 5, 8, 11 구현
 def generate_special_risks(saju_pillars, sibseong_data, db):
