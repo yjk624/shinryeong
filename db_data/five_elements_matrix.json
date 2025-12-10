@@ -1,0 +1,133 @@
+{
+  "five_elements_rules": {
+    "generating": {
+      "Wood": "Fire",
+      "Fire": "Earth",
+      "Earth": "Metal",
+      "Metal": "Water",
+      "Water": "Wood",
+      "desc": "상생(相生). 서로를 돕고 키워주는 관계."
+    },
+    "controlling": {
+      "Wood": "Earth",
+      "Earth": "Water",
+      "Water": "Fire",
+      "Fire": "Metal",
+      "Metal": "Wood",
+      "desc": "상극(相剋). 서로를 제어하고 다듬는 관계."
+    }
+  },
+  "imbalance_analysis": {
+    "Wood": {
+      "deficiency": {
+        "ko_desc": "삶의 추진력과 의욕이 부족한 상태라네. 시작은 하지만 마무리가 약하고, 매사에 소극적일 수 있네.",
+        "health_risk": "간, 담, 신경계통 허약, 시력 저하.",
+        "remedy": "녹색 식물을 가까이 하고, 아침 일찍 일어나 활동을 시작하게."
+      },
+      "excess": {
+        "ko_desc": "고집과 자존심이 너무 강해 부러질 수 있네. 남의 말을 듣지 않고 독단적으로 행동하다 고립될 수 있지.",
+        "health_risk": "위장 장애(목극토), 신경 과민.",
+        "remedy": "흰색 소품(금)을 활용하거나, 명상을 통해 화를 다스려야 하네."
+      },
+      "isolation": {
+        "ko_desc": "주변의 금(金) 기운에 의해 나무가 잘려나가는 형국(고립)이라네. 억눌린 분노가 병이 될 수 있네.",
+        "psychological_risk": "극심한 스트레스, 우울감, 대인기피.",
+        "physical_risk": "편두통, 디스크, 관절 통증."
+      }
+    },
+    "Fire": {
+      "deficiency": {
+        "ko_desc": "열정과 표현력이 식어버린 상태네. 매사에 흥미가 없고 냉소적이며, 자신을 드러내기를 꺼린다네.",
+        "health_risk": "심장, 소장, 혈액순환 장애, 저혈압.",
+        "remedy": "붉은 계열의 옷을 입고, 햇볕을 자주 쬐게."
+      },
+      "excess": {
+        "ko_desc": "불길이 너무 거세어 주변을 다 태우는 격이네. 성격이 급하고 감정 기복이 심해 실수가 잦네.",
+        "health_risk": "심혈관 질환, 안구 건조, 조울증.",
+        "remedy": "검은색(수) 인테리어나 수영 등 물과 관련된 취미를 갖게."
+      },
+      "isolation": {
+        "ko_desc": "주변의 물(水) 기운에 의해 불씨가 꺼지기 직전인 형국(고립)이라네. 세상에 나 혼자라는 외로움을 느끼기 쉽네.",
+        "psychological_risk": "무기력증, 공황장애, 심각한 소외감.",
+        "physical_risk": "심근경색 위험, 시력 급감."
+      }
+    },
+    "Earth": {
+      "deficiency": {
+        "ko_desc": "삶의 기반이 흔들리는 상태네. 한곳에 정착하지 못하고 부유하며, 믿음직한 모습을 주기 어렵네.",
+        "health_risk": "비위(소화기), 피부 트러블, 허약 체질.",
+        "remedy": "황토색 계열 활용, 등산이나 맨발 걷기."
+      },
+      "excess": {
+        "ko_desc": "고집불통의 산과 같네. 융통성이 전혀 없고 변화를 거부하니, 미련할 정도로 우직하여 답답함을 주네.",
+        "health_risk": "비만, 당뇨, 소화 불량.",
+        "remedy": "금속 장신구(금)를 하거나, 나무(목)를 심어 흙을 파헤쳐야 하네."
+      },
+      "isolation": {
+        "ko_desc": "주변의 나무(木) 뿌리에 의해 흙이 부서지는 형국(고립)이라네. 생각이 너무 많아 오히려 실천을 못하네.",
+        "psychological_risk": "의심, 불안증, 강박 관념.",
+        "physical_risk": "위궤양, 복부 팽만, 영양 실조."
+      }
+    },
+    "Metal": {
+      "deficiency": {
+        "ko_desc": "결단력과 맺고 끊음이 약한 상태네. 우유부단하여 기회를 놓치기 쉽고, 의리가 부족하다는 평을 듣네.",
+        "health_risk": "폐, 대장, 호흡기 질환, 피부 알러지.",
+        "remedy": "흰색 의상, 금속 액세서리 착용."
+      },
+      "excess": {
+        "ko_desc": "너무 날카로운 칼날과 같네. 독선적이고 비판적이라 말로 남에게 상처를 주기 쉽고, 적을 많이 만드네.",
+        "health_risk": "관절염, 뼈 관련 질환, 호흡기 과민.",
+        "remedy": "검은색(수)을 가까이하여 날카로운 기운을 설기시켜야 하네."
+      },
+      "isolation": {
+        "ko_desc": "주변의 불(火) 기운에 의해 쇠가 녹아버리는 형국(고립)이라네. 원칙을 지키려다 오히려 자신이 다치네.",
+        "psychological_risk": "신경쇠약, 과도한 예민함, 피해망상.",
+        "physical_risk": "천식, 아토피 악화, 대장 용종."
+      }
+    },
+    "Water": {
+      "deficiency": {
+        "ko_desc": "유연함과 지혜가 부족한 상태네. 융통성이 없고 매사가 빡빡하며, 밤일(성적인 에너지)이 약할 수 있네.",
+        "health_risk": "신장, 방광, 생식기 질환, 이명.",
+        "remedy": "검은색 속옷, 물을 자주 마시고 반신욕을 하게."
+      },
+      "excess": {
+        "ko_desc": "물이 범람하여 둑이 무너진 격이네. 음흉하거나 비밀이 많고, 감정에 휩쓸려 방탕한 생활을 할 수 있네.",
+        "health_risk": "부종, 냉증, 우울증.",
+        "remedy": "초록색 식물(목)을 키워 물을 빨아들이게 해야 하네."
+      },
+      "isolation": {
+        "ko_desc": "주변의 흙(土) 기운에 의해 물길이 막혀 썩는 형국(고립)이라네. 지혜가 있어도 쓰지 못하니 답답하네.",
+        "psychological_risk": "깊은 우울, 폐쇄적 성향, 공포감.",
+        "physical_risk": "신부전, 방광염, 전립선/자궁 질환."
+      }
+    }
+  },
+  "ten_gods_interactions": {
+    "Wealth_Dominance": {
+      "pattern_name": "재다신약 (Wealth Dominance)",
+      "condition": "Wealth element count >= 3 AND Self element count <= 1",
+      "effect_ko": "재물(재물/이성)은 강한데 일간(나의 힘)이 약한 형국이라네. 돈과 사람에 휘둘려 끌려다니기 쉬우며, 벌어도 내 것이 아닌 것처럼 재물이 새나간다네. 겉보기엔 부자 같아도 속빈 강정이 되기 쉽고, 남자는 여자 때문에, 여자는 시댁이나 돈 문제로 고통받을 수 있네.",
+      "risk_factors": [
+        "Financial Leakage (재물 손실)",
+        "Henpecked / Influence by Partner (이성에게 휘둘림)",
+        "Weak Health due to Stress (스트레스로 인한 건강 악화)"
+      ],
+      "remedy_advice": "Do not manage wealth directly. Use trust funds, real estate, or bonds. Focus on strengthening Self through study and health.",
+      "shamanic_voice": "자네는 돈을 좇으면 돈이 도망가는 팔자라네. 재물을 직접 관리하지 말고 문서화된 안전 자산(부동산, 채권, 적금)으로 바꾸어 묶어두게. 또한, 건강(비겁)을 챙기고 공부(인성)를 하여 내면의 힘을 길러야만 그 많은 재물을 감당할 수 있다네. 친구나 형제와 어울리는 것도 나를 강하게 하는 방법이니 참고하게."
+    },
+    "Official_Killings_Mixed": {
+      "pattern_name": "관살혼잡 (Mixed Influence of Officer & 7 Killings)",
+      "condition": "Official + 7 Killings count >= 3",
+      "effect_ko": "나를 통제하는 규율과 압박이 너무 많은 형국이라네. 직장이나 남자(여자) 문제로 늘 복잡하고, 스트레스에 시달려 예민해질 수 있네.",
+      "risk_factors": [
+        "Job Instability (직장 이동 빈번)",
+        "Complex Relationships (이성 난잡)",
+        "Chronic Stress (만성 피로)"
+      ],
+      "remedy_advice": "Choose one clear path/career. Use 'Eating God' (Output) to control the pressure or 'Resource' (Input) to accept it.",
+      "shamanic_voice": "감투 욕심을 버리고 한 우물만 파야 하네. 명예보다는 실속을 챙기고, 나를 힘들게 하는 인연은 과감히 정리하는 결단력이 필요하네."
+    }
+  }
+}

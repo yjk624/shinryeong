@@ -1,0 +1,590 @@
+{
+  "갑_갑": {
+    "ko_relation": "숲을 이룬 두 그루의 거목이라네. 서로 경쟁하면서도 의지가 되는 동료 관계이나, 너무 가까우면 햇빛을 두고 다툴 수 있으니 적당한 거리가 필요하네.",
+    "en_relation": "Two giant trees forming a forest. Colleagues who compete yet rely on each other, but closeness may cause fights over sunlight.",
+    "score": 70
+  },
+  "갑_을": {
+    "ko_relation": "큰 나무를 감고 올라가는 덩굴이라네. 을목(상대)은 나에게 의지하여 덕을 보려 하니, 내가 손해 보는 듯해도 결국엔 나의 세력을 키워주는 파트너가 될 걸세.",
+    "en_relation": "Vines climbing a giant tree. The partner relies on you for benefit; though it seems like a loss, they eventually expand your influence.",
+    "score": 75
+  },
+  "갑_병": {
+    "ko_relation": "나무가 태양을 만난 격이라네. 나의 재능이 상대방 덕분에 꽃을 피우니, 함께하면 시너지가 폭발하고 서로를 빛나게 해주는 최상의 관계지.",
+    "en_relation": "A tree meeting the sun. Your talents bloom thanks to the partner; a supreme relationship where synergy explodes and you shine together.",
+    "score": 95
+  },
+  "갑_정": {
+    "ko_relation": "자신을 태워 불을 밝히는 헌신적인 관계네. 내가 상대를 위해 희생하고 도와주어야 빛이 나니, 베푸는 마음이 있다면 아름다운 인연이 될 것이네.",
+    "en_relation": "A devoted relationship burning oneself to light a fire. You must sacrifice and help the partner to shine; beautiful if you have a giving heart.",
+    "score": 80
+  },
+  "갑_무": {
+    "ko_relation": "나무가 뿌리내릴 넓은 땅을 만났네. 내가 상대를 리드하고 통제하는 관계이며, 상대방은 나에게 안정적인 기반과 재물이 되어주는 든든한 사이라네.",
+    "en_relation": "A tree finding vast land to root in. You lead and control the partner, while they provide a stable foundation and wealth for you.",
+    "score": 85
+  },
+  "갑_기": {
+    "ko_relation": "각기합(甲己合). 나무가 흙과 하나 되어 단단히 결속된 모습이라네. 서로가 없으면 안 될 정도로 깊이 의지하며 안정을 주는 최고의 짝꿍이지.",
+    "en_relation": "Gap-Gi Harmony. Tree and earth united firmly. A perfect match relying deeply on each other for stability, inseparable.",
+    "score": 98
+  },
+  "갑_경": {
+    "ko_relation": "갑경충(甲庚沖). 도끼가 나무를 찍는 형국이라네. 상대의 말과 행동이 나에게는 스트레스와 상처가 될 수 있으니, 서로의 다름을 인정하지 않으면 다툼이 끊이지 않네.",
+    "en_relation": "Gap-Gyeong Clash. An axe chopping wood. The partner's words and actions can be stressful and hurtful; conflict is endless without accepting differences.",
+    "score": 40
+  },
+  "갑_신": {
+    "ko_relation": "나무를 다듬는 날카로운 조각도와 같네. 상대방의 잔소리나 간섭이 피곤할 수 있으나, 나를 성장시키고 다듬어주는 쓴약과 같은 스승이라 생각하게.",
+    "en_relation": "Like a sharp chisel carving wood. The partner's nagging may be tiring, but consider them a teacher refining you like bitter medicine.",
+    "score": 60
+  },
+  "갑_임": {
+    "ko_relation": "나무에게 물을 주는 고마운 관계네. 상대방의 지혜와 후원이 나의 성장에 큰 도움이 되니, 배울 점이 많고 편안함을 느끼는 상생의 관계라네.",
+    "en_relation": "A grateful relationship giving water to a tree. The partner's wisdom and support greatly aid your growth; a symbiotic relationship of learning and comfort.",
+    "score": 90
+  },
+  "갑_계": {
+    "ko_relation": "메마른 나무에 내리는 단비라네. 나의 갈증을 해소해주고 세심하게 챙겨주는 상대이니, 어머니와 같은 따뜻함과 정서적인 안정을 얻을 수 있네.",
+    "en_relation": "Sweet rain on a dry tree. Quenching your thirst and caring for you meticulously, you find mother-like warmth and emotional stability.",
+    "score": 88
+  },
+  "을_갑": {
+    "ko_relation": "덩굴이 큰 나무에 의지하는 형국이라네. 내가 상대방에게 기대어 덕을 볼 수 있으니, 든든한 후원자나 멘토를 만난 것과 같이 길한 관계네.",
+    "en_relation": "Vines relying on a giant tree. You can lean on the partner for benefit; a lucky relationship like meeting a strong supporter or mentor.",
+    "score": 85
+  },
+  "을_을": {
+    "ko_relation": "바람에 엉킨 풀잎들과 같네. 서로 비슷하여 친구처럼 편안할 수 있으나, 사소한 일로 질투하거나 경쟁심을 느끼기 쉬우니 배려가 필요하네.",
+    "en_relation": "Grass blades tangled in the wind. Comfortable like friends due to similarities, but prone to jealousy or competition over trivial matters; care is needed.",
+    "score": 70
+  },
+  "을_병": {
+    "ko_relation": "꽃이 태양을 보고 활짝 피어난 모습이라네. 상대방 덕분에 나의 매력이 드러나고 성격이 밝아지니, 우울함을 날려주는 환상의 짝꿍이라네.",
+    "en_relation": "A flower blooming towards the sun. Thanks to the partner, your charm is revealed and personality brightens; a fantastic match chasing away gloom.",
+    "score": 95
+  },
+  "을_정": {
+    "ko_relation": "마른 풀이 불을 만난 격이라네. 열정이 금방 타오르지만 그만큼 빨리 식거나 내가 다 타버릴 수 있으니, 적당한 거리 조절이 필요한 뜨거운 관계네.",
+    "en_relation": "Dry grass meeting fire. Passion ignites quickly but may cool fast or burn you out; a hot relationship requiring distance control.",
+    "score": 75
+  },
+  "을_무": {
+    "ko_relation": "꽃이 피어날 넓은 대지를 만났네. 내가 상대를 리드하려 하지만 땅이 너무 넓어 버거울 수 있으니, 욕심을 버리고 서로의 영역을 존중해야 하네.",
+    "en_relation": "A flower finding vast earth to bloom. You try to lead, but the land may be too vast; drop greed and respect each other's territory.",
+    "score": 80
+  },
+  "을_기": {
+    "ko_relation": "화초가 비옥한 정원 흙을 만났네. 내가 뿌리내리기에 딱 좋은 환경이니, 상대방은 나에게 헌신하고 안정감을 주는 고마운 존재가 될 걸세.",
+    "en_relation": "A flower meeting fertile garden soil. Perfect environment to root; the partner will be a grateful presence offering dedication and stability.",
+    "score": 90
+  },
+  "을_경": {
+    "ko_relation": "을경합(乙庚合). 유연한 꽃이 단단한 바위를 감싸 안은 형국이라네. 강한 상대에게 내가 이끌려 다니기 쉬우나, 결과적으로는 나를 지켜주는 울타리가 되네.",
+    "en_relation": "Eul-Gyeong Harmony. A flexible flower embracing a hard rock. You may be led by the strong partner, but they ultimately become a fence protecting you.",
+    "score": 85
+  },
+  "을_신": {
+    "ko_relation": "을신충(乙辛沖). 꽃잎을 가위로 자르는 형국이라네. 상대의 날카로운 말이나 행동이 나에게 큰 상처가 될 수 있으니, 가장 피해야 할 예민하고 위험한 관계네.",
+    "en_relation": "Eul-Sin Clash. Scissors cutting flower petals. The partner's sharp words or actions can deeply hurt you; a sensitive and dangerous relationship to avoid.",
+    "score": 30
+  },
+  "을_임": {
+    "ko_relation": "화초가 너무 많은 물에 떠내려가는 형국이라네. 상대방의 과한 사랑이나 간섭이 오히려 나를 힘들게 할 수 있으니, 부담스러움을 느낄 수 있는 관계네.",
+    "en_relation": "A flower washing away in too much water. The partner's excessive love or interference may burden you; a relationship where you might feel overwhelmed.",
+    "score": 50
+  },
+  "을_계": {
+    "ko_relation": "화초에 내리는 촉촉한 봄비라네. 나의 성장을 돕고 감성적으로 잘 통하는 사이이니, 서로 아껴주고 보살피는 다정한 연인이나 친구가 될 수 있네.",
+    "en_relation": "Moist spring rain on a flower. Aiding your growth and connecting emotionally, you can be affectionate lovers or friends caring for each other.",
+    "score": 92
+  },
+  "병_갑": {
+    "ko_relation": "태양이 나무를 비추는 격이라네. 내가 상대를 키워주는 입장이지만, 나무가 자라 불을 더 키워주니(목생화) 서로 윈윈하는 발전적인 관계라네.",
+    "en_relation": "Sun shining on a tree. You nurture the partner, but as the tree grows, it feeds the fire; a win-win developmental relationship.",
+    "score": 90
+  },
+  "병_을": {
+    "ko_relation": "태양이 꽃을 비추니 아름다움이 배가되네. 상대방은 나를 우러러보고 나는 상대를 빛내주니, 로맨틱하고 화려한 관계가 될 수 있네.",
+    "en_relation": "Sun shining on a flower, doubling its beauty. The partner looks up to you, and you make them shine; a romantic and glamorous relationship.",
+    "score": 88
+  },
+  "병_병": {
+    "ko_relation": "하늘에 두 개의 태양이 뜬 격이라네. 서로 주장이 강하고 돋보이려 하니 부딪힘이 잦으나, 뜻이 맞으면 세상을 바꿀 만큼 강력한 에너지를 내는 동지네.",
+    "en_relation": "Two suns in the sky. Frequent clashes as both seek attention and assertiveness, but if aligned, comrades with powerful energy to change the world.",
+    "score": 60
+  },
+  "병_정": {
+    "ko_relation": "낮에 켜진 촛불과 같네. 나의 빛이 너무 강해 상대방의 존재감이 가려질 수 있으니, 내가 상대를 배려하고 챙겨주어야 관계가 유지되네.",
+    "en_relation": "A candle lit during the day. Your light is so strong it may overshadow the partner; you must care for and consider them to maintain the relationship.",
+    "score": 70
+  },
+  "병_무": {
+    "ko_relation": "태양이 넓은 대지를 비추는 형상이라네. 나의 열정을 다해 상대를 돕고 베푸는 관계이니, 상대방은 나에게 고마움을 느끼고 나는 보람을 느끼는 구조네.",
+    "en_relation": "Sun shining on vast land. You help and give to the partner with all your passion; they feel gratitude, and you feel fulfillment.",
+    "score": 85
+  },
+  "병_기": {
+    "ko_relation": "구름에 가려진 태양과 같네. 내가 베풀어도 빛이 나지 않고 상대방이 내 빛을 가리는 형국이니, 답답함을 느끼거나 손해를 볼 수 있는 관계네.",
+    "en_relation": "Sun hidden by clouds. Even if you give, you don't shine, and the partner obscures your light; a relationship where you may feel stifled or suffer loss.",
+    "score": 50
+  },
+  "병_경": {
+    "ko_relation": "불로 쇠를 녹이는 형국이라네. 내가 상대를 통제하고 다스리려 하니 주도권을 쥐기 쉽지만, 너무 강하게 대하면 상대가 반발할 수 있으니 조절이 필요하네.",
+    "en_relation": "Fire melting metal. You try to control and rule the partner, easily taking the lead, but being too harsh may cause rebellion; moderation needed.",
+    "score": 75
+  },
+  "병_신": {
+    "ko_relation": "병신합(丙辛合). 태양이 보석을 비추어 물(지혜)로 변하는 신비한 조화네. 서로 첫눈에 반하기 쉽고, 권위보다는 실리와 사랑을 쫓는 낭만적인 커플이네.",
+    "en_relation": "Byeong-Sin Harmony. Sun illuminating a gem, turning into water (wisdom). Easy to fall in love at first sight, a romantic couple pursuing practicality and love over authority.",
+    "score": 95
+  },
+  "병_임": {
+    "ko_relation": "병임충(丙壬沖). 강와 태양이 부딪히는 격이라네. 수화상전(水火相戰)으로 감정 싸움이 격렬할 수 있으나, 서로를 자극하여 발전시키는 '강호동과 유재석' 같은 라이벌 관계네.",
+    "en_relation": "Byeong-Im Clash. River and sun colliding. Water-Fire war causing intense emotional fights, but a rival relationship stimulating mutual growth.",
+    "score": 50
+  },
+  "병_계": {
+    "ko_relation": "태양을 가리는 먹구름이라네. 상대방으로 인해 내 뜻이 꺾이거나 우울해질 수 있으니, 궁합으로는 그리 좋지 않으며 서로 답답함을 느낄 수 있네.",
+    "en_relation": "Dark clouds covering the sun. The partner may thwart your will or depress you; not good compatibility, leading to mutual frustration.",
+    "score": 40
+  },
+  "정_갑": {
+    "ko_relation": "장작이 불을 살려주는 형국이라네. 상대방의 도움으로 내 능력이 극대화되니, 나에게는 더할 나위 없이 고맙고 힘이 되는 귀인과 같은 존재네.",
+    "en_relation": "Firewood feeding the fire. Your abilities are maximized by the partner's help; a noble-like presence that is incredibly grateful and empowering to you.",
+    "score": 95
+  },
+  "정_을": {
+    "ko_relation": "젖은 풀을 태우는 불이라네. 상대가 나를 도우려 하지만 연기만 나고 힘이 들 수 있으니, 마음은 고마우나 현실적인 도움은 크지 않을 수 있네.",
+    "en_relation": "Fire burning wet grass. The partner tries to help but may only cause smoke and trouble; grateful heart, but practical help may be small.",
+    "score": 65
+  },
+  "정_병": {
+    "ko_relation": "달이 떴는데 해가 비추는 격이라네. 나의 매력이 상대방의 기세에 눌려 빛을 잃을 수 있으니, 경쟁하기보다는 상대의 그늘 아래서 실속을 챙겨야 하네.",
+    "en_relation": "Moon rising while the sun shines. Your charm may be overshadowed by the partner's force; seek substance under their shadow rather than competing.",
+    "score": 60
+  },
+  "정_정": {
+    "ko_relation": "두 개의 촛불이 모여 밝기를 더하는 형국이라네. 서로의 마음을 누구보다 잘 이해하고 위로해주는 소울메이트가 될 수 있는 따뜻한 관계네.",
+    "en_relation": "Two candles gathering to brighten. A warm relationship where you understand and comfort each other's hearts better than anyone, potential soulmates.",
+    "score": 85
+  },
+  "정_무": {
+    "ko_relation": "화로 속의 불씨가 재로 변하는 형국이라네. 내가 상대를 위해 너무 희생하다가 지칠 수 있으니, 무조건적인 퍼주기식 사랑은 경계해야 하네.",
+    "en_relation": "Embers in a brazier turning to ash. You may exhaust yourself sacrificing too much for the partner; guard against unconditional giving.",
+    "score": 55
+  },
+  "정_기": {
+    "ko_relation": "따뜻한 불이 흙을 덥혀주는 모습이네. 나의 섬세한 배려가 상대방을 편안하게 해주니, 식신생재의 흐름으로 재물과 안정을 함께 만들어갈 수 있네.",
+    "en_relation": "Warm fire heating the earth. Your delicate care comforts the partner; a flow of 'eating god generating wealth', creating wealth and stability together.",
+    "score": 88
+  },
+  "정_경": {
+    "ko_relation": "불이 쇠를 녹여 도구를 만드는 격이라네. 내가 상대를 잘 다루고 컨트롤할 수 있으며, 상대를 유능한 사람으로 만들어주는 내조/외조의 힘이 있네.",
+    "en_relation": "Fire melting metal to make tools. You can handle and control the partner well, possessing the power of support to make them competent.",
+    "score": 85
+  },
+  "정_신": {
+    "ko_relation": "불이 보석을 그을리는 형국이라네. 나의 의도가 상대에게는 상처가 되거나 예민하게 받아들여질 수 있으니, 말과 행동을 부드럽게 해야 다툼이 없네.",
+    "en_relation": "Fire scorching a gem. Your intentions may hurt or be taken sensitively by the partner; speak and act softly to avoid conflict.",
+    "score": 45
+  },
+  "정_임": {
+    "ko_relation": "정임합(丁壬合). 촛불과 호수가 만나 음란지합(예술적 결합)을 이루었네. 매우 감성적이고 육체적인 끌림이 강하며, 서로에게 깊이 빠져드는 열정적인 사랑이네.",
+    "en_relation": "Jeong-Im Harmony. Candle and lake meeting in artistic union. Highly emotional and physically attracted, a passionate love deeply immersed in each other.",
+    "score": 92
+  },
+  "정_계": {
+    "ko_relation": "정계충(丁癸沖). 촛불이 비를 맞아 꺼지는 형국이라네. 상대방의 한마디에 내 가슴이 무너질 수 있으니, 서로가 서로에게 상처를 주기 쉬운 위태로운 관계네.",
+    "en_relation": "Jeong-Gye Clash. Candle extinguished by rain. A word from the partner can crush your heart; a precarious relationship prone to mutual hurt.",
+    "score": 30
+  },
+  "무_갑": {
+    "ko_relation": "산에 큰 나무를 심는 형국이라네. 상대방이 나의 가치를 높여주고 명예를 가져다주니, 나를 다듬어주는 스승이나 존경할 수 있는 배우자로 적합하네.",
+    "en_relation": "Planting a big tree on a mountain. The partner raises your value and brings honor; suitable as a teacher refining you or a respectable spouse.",
+    "score": 90
+  },
+  "무_을": {
+    "ko_relation": "산에 잡초나 꽃이 피어난 모습이네. 상대방이 나를 귀찮게 하거나 옭아매려 할 수 있으니(관살혼잡), 내가 주도권을 잡지 못하면 피곤해질 수 있네.",
+    "en_relation": "Weeds or flowers blooming on a mountain. The partner may annoy or entrap you; you may become tired if you don't take the lead.",
+    "score": 60
+  },
+  "무_병": {
+    "ko_relation": "산 위에 태양이 뜬 격이라네. 상대방의 밝은 기운이 나를 돋보이게 하고 활력을 주니, 함께 있으면 기분이 좋아지고 일이 잘 풀리는 긍정적인 관계네.",
+    "en_relation": "Sun rising over a mountain. The partner's bright energy highlights and vitalizes you; a positive relationship where you feel good and things go well together.",
+    "score": 95
+  },
+  "무_정": {
+    "ko_relation": "화로의 불이 흙을 굽는 형국이라네. 상대방의 세심한 배려가 나에게는 힘이 되지만, 때로는 지나친 간섭으로 느껴져 답답할 수도 있네.",
+    "en_relation": "Fire in a brazier baking earth. The partner's meticulous care empowers you, but may sometimes feel like stifling interference.",
+    "score": 75
+  },
+  "무_무": {
+    "ko_relation": "첩첩산중, 산 넘어 산이라네. 서로 고집이 세고 타협하지 않으려 하니 답답한 관계가 될 수 있으나, 같은 목표를 향해 가면 묵직한 동반자가 되네.",
+    "en_relation": "Mountains beyond mountains. Both stubborn and uncompromising, leading to a stifling relationship, but solid partners if heading towards the same goal.",
+    "score": 50
+  },
+  "무_기": {
+    "ko_relation": "산과 평야가 어우러진 모습이네. 서로 비슷하면서도 달라 편안함을 느끼며, 형제나 친구처럼 서로의 부족한 점을 채워주는 안정적인 관계네.",
+    "en_relation": "Mountains and plains mingling. Similar yet different, offering comfort; a stable relationship filling each other's gaps like siblings or friends.",
+    "score": 80
+  },
+  "무_경": {
+    "ko_relation": "산에서 광물을 캐내는 형국이라네. 내가 상대를 위해 희생하고 뒷바라지하는 관계이니, 나는 조금 힘들어도 상대방은 나 덕분에 크게 성장할 걸세.",
+    "en_relation": "Mining minerals from a mountain. You sacrifice and support the partner; though hard for you, they will grow greatly thanks to you.",
+    "score": 70
+  },
+  "무_신": {
+    "ko_relation": "산에 자갈이 많은 격이라네. 내가 상대에게 베풀어도 좋은 소리를 듣기 어렵고, 내 기운만 빠져나가는 느낌을 받을 수 있으니 실속을 챙겨야 하네.",
+    "en_relation": "A mountain full of gravel. Even if you give, it's hard to get credit, and you may feel drained; look out for your own interests.",
+    "score": 45
+  },
+  "무_임": {
+    "ko_relation": "산이 물을 막아 댐을 이룬 격이라네. 상대방(재물)을 내가 통제하고 관리할 수 있으니, 경제적인 협력 관계나 부부로서 재산을 불리기에 아주 좋은 궁합이네.",
+    "en_relation": "A mountain blocking water to form a dam. You can control and manage the partner (wealth); excellent compatibility for economic cooperation or growing marital assets.",
+    "score": 90
+  },
+  "무_계": {
+    "ko_relation": "무계합(戊癸合). 늙은 남자와 어린 여자의 만남처럼, 무정지합(情)이라 하네. 서로 너무 달라서 끌리고 집착하게 되며, 다정다감하지만 질투심도 강한 애증의 관계네.",
+    "en_relation": "Mu-Gye Harmony. Like an old man meeting a young girl, a sentimental union. Attracted by differences, obsessed, affectionate but prone to jealousy and love-hate.",
+    "score": 85
+  },
+  "기_갑": {
+    "ko_relation": "각기합(甲己合). 비옥한 땅에 큰 나무가 뿌리를 내린 형국이라네. 내가 상대를 받아주고 내조하는 관계이며, 상대방은 나에게 명예와 울타리가 되어주는 찰떡궁합이지.",
+    "en_relation": "Gap-Gi Harmony. A giant tree rooting in fertile soil. You support and nurture the partner, while they provide honor and protection; a perfect match.",
+    "score": 95
+  },
+  "기_을": {
+    "ko_relation": "잘 가꿔진 정원에 잡초가 무성한 꼴이라네. 상대방(관성)이 나를 힘들게 하거나 스트레스를 줄 수 있으니, 내가 주도권을 잡고 상대를 다스려야 편안하네.",
+    "en_relation": "Weeds overgrowing a well-kept garden. The partner (authority) may stress you out; you must take the lead and manage them to find peace.",
+    "score": 50
+  },
+  "기_병": {
+    "ko_relation": "따뜻한 태양이 대지를 비추는 격이라네. 상대방의 지지와 후원으로 내가 성장하고 문서나 학문적인 성취를 얻을 수 있으니, 나에게는 더없이 고마운 귀인이라네.",
+    "en_relation": "Warm sun shining on the earth. With the partner's support, you grow and achieve in academics or documents; a truly grateful noble person to you.",
+    "score": 90
+  },
+  "기_정": {
+    "ko_relation": "화로의 불이 흙을 따뜻하게 데워주네. 어머니처럼 세심하게 나를 챙겨주는 상대이니, 정서적으로 안정감을 느끼고 위로를 받을 수 있는 관계네.",
+    "en_relation": "Fire in a hearth warming the earth. A partner who cares for you meticulously like a mother, offering emotional stability and comfort.",
+    "score": 85
+  },
+  "기_무": {
+    "ko_relation": "평야 뒤에 든든한 산이 버티고 있는 형세네. 같은 흙의 기운이라 친구처럼 편안하고, 내가 힘들 때 기댈 수 있는 든든한 형제나 동료와 같은 사이라네.",
+    "en_relation": "A sturdy mountain standing behind a plain. Same earth energy makes it comfortable like a friend, a reliable sibling or colleague to lean on in tough times.",
+    "score": 80
+  },
+  "기_기": {
+    "ko_relation": "넓은 들판이 끝없이 펼쳐진 격이라네. 서로 너무 비슷하여 편안함은 있으나, 발전이 더딜 수 있고 고집 대결을 하면 끝이 없으니 양보가 필요하네.",
+    "en_relation": "Endless plains stretching out. Comfort due to similarity, but growth may be slow; stubborn clashes can be endless, so compromise is needed.",
+    "score": 70
+  },
+  "기_경": {
+    "ko_relation": "흙 속에서 바위가 드러나는 형국이라네. 나의 재주로 상대를 생해주지만, 상대방의 기운이 너무 강해 내가 기운이 빠질 수 있으니 적당한 거리가 좋네.",
+    "en_relation": "Rocks revealed in the soil. You support the partner with your talents, but their energy is so strong it may drain you; moderate distance is good.",
+    "score": 65
+  },
+  "기_신": {
+    "ko_relation": "흙이 묻은 보석이라네. 내가 상대를 도와주려 하지만 상대는 그것을 간섭이나 오지랖으로 느낄 수 있으니, 상대를 닦아주고 빛내주는 역할에 만족해야 하네.",
+    "en_relation": "A gem covered in dirt. You try to help, but the partner may feel it as interference; be content with the role of polishing and making them shine.",
+    "score": 60
+  },
+  "기_임": {
+    "ko_relation": "흙탕물(기토탁임)이 될 우려가 있네. 재물(물)과 합을 하고 싶으나 물이 너무 많으면 흙이 떠내려가니, 욕심을 부리면 건강이나 돈을 잃을 수 있는 위태로운 관계네.",
+    "en_relation": "Risk of muddy water. You want to merge with wealth (water), but too much water washes the earth away; a precarious relationship where greed brings loss.",
+    "score": 40
+  },
+  "기_계": {
+    "ko_relation": "메마른 논밭에 내리는 단비라네. 나의 갈증을 해소해주고 재물을 불려주는 상대이니, 현실적인 이득과 정서적인 만족을 동시에 주는 좋은 궁합이라네.",
+    "en_relation": "Sweet rain on a dry paddy. A partner who quenches your thirst and grows your wealth, offering both practical gain and emotional satisfaction.",
+    "score": 92
+  },
+  "경_갑": {
+    "ko_relation": "갑경충(甲庚沖). 도끼로 장작을 패는 격이라네. 내가 상대를 이기고 통제하려 하니 주도권은 나에게 있으나, 상대방이 상처받고 떠날 수 있음을 경계해야 하네.",
+    "en_relation": "Gap-Gyeong Clash. Splitting firewood with an axe. You try to control and win, holding the lead, but beware of hurting the partner and driving them away.",
+    "score": 50
+  },
+  "경_을": {
+    "ko_relation": "을경합(乙庚合). 강한 장수가 여인을 품은 형국이라네. 겉으로는 내가 이기는 듯하나 실질적으로는 상대의 부드러움에 내가 묶이는 꼴이니, 애처가나 공처가가 될 상이네.",
+    "en_relation": "Eul-Gyeong Harmony. A strong general embracing a woman. Seemingly you win, but actually you are bound by their softness; a devoted or henpecked partner.",
+    "score": 85
+  },
+  "경_병": {
+    "ko_relation": "원석을 제련하는 용광로라네. 나를 힘들게 하는 듯하나 결국 나를 빛나는 보석이나 그릇으로 만들어주는 상대이니, 존경심을 가지고 따르면 대성할 관계네.",
+    "en_relation": "A blast furnace refining ore. Seems to torment you, but ultimately makes you into a shining gem or vessel; follow with respect for greatness.",
+    "score": 90
+  },
+  "경_정": {
+    "ko_relation": "쇠를 녹여 도구를 만드는 대장장이와 같네. 섬세하게 나를 코칭하고 다듬어주니, 직장 상사나 배우자로서 나를 유능하게 만들어주는 고마운 짝이라네.",
+    "en_relation": "A blacksmith forging tools from iron. Delicately coaching and refining you, a grateful partner who makes you competent as a boss or spouse.",
+    "score": 92
+  },
+  "경_무": {
+    "ko_relation": "광산에 묻힌 바위라네. 상대방의 보호가 너무 지나쳐 내가 세상 밖으로 나가는 것을 막을 수 있으니(매금), 과잉보호나 간섭이 우려되는 관계네.",
+    "en_relation": "Rock buried in a mine. The partner's protection is excessive, potentially blocking you from the world; a relationship risking overprotection or interference.",
+    "score": 55
+  },
+  "경_기": {
+    "ko_relation": "바위에 묻은 흙먼지와 같네. 나를 도와준답시고 곁에 있지만 실질적인 도움보다는 귀찮게 하거나 답답하게 만들 수 있으니, 큰 기대를 하지 않는 것이 좋네.",
+    "en_relation": "Dust on a rock. They stay by to help, but may be more annoying or stifling than helpful; best not to expect too much.",
+    "score": 45
+  },
+  "경_경": {
+    "ko_relation": "두 개의 도끼가 부딪히는 꼴이라네. 소리가 요란하고 자존심 대결이 엄청나니, 한쪽이 굽히지 않으면 끝장을 보는 전쟁 같은 관계가 될 수 있네.",
+    "en_relation": "Two axes colliding. Loud noise and immense clash of pride; without compromise, it can become a war-like relationship seeing the end.",
+    "score": 40
+  },
+  "경_신": {
+    "ko_relation": "무쇠와 보석이 섞여 있네. 나는 투박하고 상대는 섬세하니 서로 안 맞는 듯하지만, 내가 상대를 보호해주는 울타리 역할을 하면 의외로 잘 지낼 수 있네.",
+    "en_relation": "Cast iron mixed with gems. You are rough and they are delicate, seeming mismatched, but you can get along if you act as a protective fence.",
+    "score": 65
+  },
+  "경_임": {
+    "ko_relation": "바위를 씻어주는 강물이라네. 나의 능력을 세상에 널리 알리고 재주를 발휘하게 해주니, 함께하면 사업이 번창하고 일이 술술 풀리는 최고의 파트너네.",
+    "en_relation": "River water washing a rock. Promoting your abilities to the world; together, business prospers and things go smoothly. A top partner.",
+    "score": 95
+  },
+  "경_계": {
+    "ko_relation": "무쇠에 녹이 스는 형국이라네. 상대방의 감정적인 태도나 잔소리가 나를 병들게 하고 지치게 만들 수 있으니, 에너지 소모가 심한 관계라네.",
+    "en_relation": "Iron rusting. The partner's emotional attitude or nagging can make you sick and tired; a relationship with severe energy drain.",
+    "score": 35
+  },
+  "신_갑": {
+    "ko_relation": "작은 칼로 큰 나무를 베려는 격이라네. 재물 욕심은 나지만 내가 감당하기 버거워 칼날이 부러질 수 있으니, 무리하게 상대를 통제하려 하지 말게.",
+    "en_relation": "Cutting a big tree with a small knife. Desiring wealth but overwhelmed, your blade may break; do not try to control the partner excessively.",
+    "score": 40
+  },
+  "신_을": {
+    "ko_relation": "을신충(乙辛沖). 가위로 꽃을 자르는 형국이라네. 내가 상대를 아주 쉽게 다루고 제압할 수 있으나, 상대방은 나 때문에 시들어가고 상처받으니 주의해야 하네.",
+    "en_relation": "Eul-Sin Clash. Scissors cutting a flower. You can easily handle and subdue the partner, but they wither and hurt because of you; take care.",
+    "score": 60
+  },
+  "신_병": {
+    "ko_relation": "병신합(丙辛合). 보석이 태양 빛을 받아 반짝이는 모습이라네. 서로 강렬하게 끌리고 나의 가치를 높여주니, 권위와 명예를 함께 누릴 수 있는 화려한 커플이네.",
+    "en_relation": "Byeong-Sin Harmony. A gem sparkling in the sun. Strongly attracted, raising your value; a glamorous couple enjoying authority and honor together.",
+    "score": 98
+  },
+  "신_정": {
+    "ko_relation": "보석이 불길에 그을리는 격이라네. 상대방의 말 한마디가 나에게는 씻을 수 없는 상처가 되고 스트레스가 되니, 가장 피해야 할 껄끄러운 관계라네.",
+    "en_relation": "A gem scorched by fire. A single word from the partner becomes an indelible wound and stress; a difficult relationship to avoid.",
+    "score": 20
+  },
+  "신_무": {
+    "ko_relation": "보석이 깊은 산속에 묻히는 매금(埋金)의 형상이라네. 상대방의 과잉보호가 나를 답답하게 하고 세상으로 나가는 길을 막으니, 독립심을 길러야 하네.",
+    "en_relation": "Gem buried deep in a mountain. The partner's overprotection stifles you and blocks your way to the world; cultivate independence.",
+    "score": 45
+  },
+  "신_기": {
+    "ko_relation": "보석에 먼지가 묻은 꼴이라네. 상대방이 나를 돕겠다고 나서지만 오히려 내 빛을 가리고 귀찮게 하니, 고마움보다는 짜증이 앞설 수 있는 관계네.",
+    "en_relation": "Dust on a gem. The partner tries to help but obscures your light and annoys you; annoyance may outweigh gratitude.",
+    "score": 50
+  },
+  "신_경": {
+    "ko_relation": "보석 옆에 놓인 바위라네. 내가 돋보이고 싶지만 거대한 바위가 시선을 뺏어가니 질투가 나고, 경쟁심 때문에 마음이 편치 않은 관계네.",
+    "en_relation": "Rock next to a gem. You want to shine, but the huge rock steals the show, causing jealousy and discomfort due to competition.",
+    "score": 55
+  },
+  "신_신": {
+    "ko_relation": "보석함 속의 두 보석이라네. 서로 잘났다고 뽐내며 예민하게 구니 피곤하지만, 서로의 가치를 누구보다 잘 알아주는 라이벌이자 동료가 될 수 있네.",
+    "en_relation": "Two gems in a box. Tiring as both show off and act sensitive, but rivals and colleagues who understand each other's value best.",
+    "score": 70
+  },
+  "신_임": {
+    "ko_relation": "도세주옥(淘洗珠玉). 물로 보석을 깨끗이 씻어내는 격이라네. 나의 재능과 미모를 세상에 완벽하게 드러내주니, 나를 스타로 만들어주는 최고의 매니저와 같네.",
+    "en_relation": "Washing a gem with water. Perfectly revealing your talent and beauty to the world; like a top manager making you a star.",
+    "score": 100
+  },
+  "신_계": {
+    "ko_relation": "보석에 녹이 스는 형국이라네. 상대방의 감정적인 호소나 우울함이 나에게 전염되어 나의 빛이 바래질 수 있으니, 적당한 거리두기가 필요하네.",
+    "en_relation": "Gem rusting. The partner's emotional appeals or depression may infect you, fading your light; keep a moderate distance.",
+    "score": 40
+  },
+  "임_갑": {
+    "ko_relation": "물이 나무를 기르는 수생목의 전형이라네. 나의 지혜와 자본을 투자하여 상대를 키우는 보람이 있으니, 자식이나 제자처럼 아끼고 돌볼 대상이라네.",
+    "en_relation": "Typical Water nourishing Wood. Rewarding to raise the partner with your wisdom and capital; someone to cherish like a child or student.",
+    "score": 90
+  },
+  "임_을": {
+    "ko_relation": "호수에 뜬 부평초와 같네. 내가 아무리 잘해줘도 상대는 고마움을 모르고 둥둥 떠다니니, 밑 빠진 독에 물 붓기처럼 허무함을 느낄 수 있네.",
+    "en_relation": "Duckweed on a lake. No matter how good you are, the partner drifts ungratefully; feels futile like pouring water into a broken jar.",
+    "score": 55
+  },
+  "임_병": {
+    "ko_relation": "병임충(丙壬沖). 강휘상영(江暉相映). 호수에 태양이 비치니 아름다우나, 물과 불이 충돌하여 감정 기복이 심하네. 싸우면서 정이 드는 드라마틱한 관계네.",
+    "en_relation": "Byeong-Im Clash. Sun reflecting on the river. Beautiful but Water and Fire collide causing mood swings. A dramatic relationship of fighting and bonding.",
+    "score": 85
+  },
+  "임_정": {
+    "ko_relation": "정임합(丁壬合). 촛불과 호수의 만남이라네. 음란지합이라 불릴 만큼 서로에게 강렬하게 끌리고 집착하니, 밤에 만나는 연인처럼 뜨겁고 비밀스러운 사이네.",
+    "en_relation": "Jeong-Im Harmony. Candle and lake. Called an erotic union, strongly attracted and obsessed; hot and secretive like lovers meeting at night.",
+    "score": 95
+  },
+  "임_무": {
+    "ko_relation": "범람하는 물을 댐이 막아주는 격이라네. 나의 방탕함이나 불안정을 상대방이 꽉 잡아주니, 나를 통제해주는 고마운 리더나 배우자감이라네.",
+    "en_relation": "A dam blocking overflowing water. The partner holds back your dissipation or instability; a grateful leader or spouse to control you.",
+    "score": 90
+  },
+  "임_기": {
+    "ko_relation": "기토탁임(己土濁壬). 맑은 물에 흙탕물이 섞이는 꼴이라네. 상대방과 엮이면 일이 꼬이거나 명예가 실추될 수 있으니, 금전 거래나 동업은 피하는 게 상책이네.",
+    "en_relation": "Muddying the water. Mixing with the partner creates mess or dishonor; best to avoid financial deals or partnerships.",
+    "score": 30
+  },
+  "임_경": {
+    "ko_relation": "수원지에서 물이 콸콸 쏟아지는 형국이라네. 상대방이 나에게 무한한 지원과 사랑을 퍼부어주니, 넘치는 사랑에 행복하지만 때로는 부담스러울 수도 있네.",
+    "en_relation": "Water pouring from the source. The partner pours infinite support and love on you; happy with overflowing love but sometimes burdened.",
+    "score": 88
+  },
+  "임_신": {
+    "ko_relation": "보석을 씻어주는 물이라네. 내가 상대를 빛내주는 역할을 하니 상대방은 나를 좋아하지만, 나는 실속 없이 봉사만 하다가 지칠 수 있음을 경계하게.",
+    "en_relation": "Water washing a gem. You make the partner shine so they like you, but beware of exhausting yourself serving without gain.",
+    "score": 75
+  },
+  "임_임": {
+    "ko_relation": "거대한 파도가 겹치는 형국이라네. 세력이 너무 커져 통제가 안 될 수 있으니, 서로 경쟁하기보다는 힘을 합쳐 큰일을 도모해야 하는 동업자 관계네.",
+    "en_relation": "Massive waves overlapping. Force becomes too big to control; partners who must unite for great things rather than compete.",
+    "score": 70
+  },
+  "임_계": {
+    "ko_relation": "강물에 비가 내리는 격이라네. 이미 물이 많은데 또 물이 오니 범람할 우려가 있네. 경쟁자가 내 몫을 뺏어가거나 혼란을 줄 수 있으니 주의하게.",
+    "en_relation": "Rain on the river. Water overflowing. Beware of competitors taking your share or causing confusion.",
+    "score": 45
+  },
+  "계_갑": {
+    "ko_relation": "봄비가 나무를 적시는 격이라네. 나의 희생과 봉사로 상대를 키워내니, 교육적인 보람은 크지만 내 기운이 많이 빠져나가는 희생적인 사랑이네.",
+    "en_relation": "Spring rain wetting a tree. Raising the partner through sacrifice and service; rewarding educationally but a sacrificial love draining your energy.",
+    "score": 85
+  },
+  "계_을": {
+    "ko_relation": "화초에 내리는 이슬비라네. 서로 코드가 잘 맞고 감성적인 교류가 활발하니, 예술적인 영감을 주고받는 아름다운 연인이나 친구 관계네.",
+    "en_relation": "Drizzle on a flower. Codes match well and emotional exchange is active; beautiful lovers or friends sharing artistic inspiration.",
+    "score": 95
+  },
+  "계_병": {
+    "ko_relation": "비가 내려 태양을 가리는 형국이라네. 상대방의 밝은 기운을 내가 우울하게 만들 수 있으니, 서로의 성향 차이를 인정하지 않으면 답답한 관계가 되네.",
+    "en_relation": "Rain obscuring the sun. You may darken the partner's bright energy; a stifling relationship if differences aren't accepted.",
+    "score": 40
+  },
+  "계_정": {
+    "ko_relation": "정계충(丁癸沖). 촛불을 꺼버리는 비라네. 나의 무심한 행동이 상대에게는 큰 상처가 될 수 있으니, 서로 예민하게 대립하기 쉬운 가장 피곤한 궁합이라네.",
+    "en_relation": "Jeong-Gye Clash. Rain extinguishing a candle. Your indifferent actions can deeply hurt the partner; a tiring match prone to sensitive conflict.",
+    "score": 20
+  },
+  "계_무": {
+    "ko_relation": "무계합(戊癸合). 비가 내려 산을 촉촉하게 적시니 무지개가 뜨는 형국이라네. 늙은 신랑과 어린 신부의 만남처럼, 나이 차이나 신분 차이를 넘어선 애틋한 사랑이네.",
+    "en_relation": "Mu-Gye Harmony. Rain wetting the mountain, forming a rainbow. Like an old groom and young bride, a tender love transcending age or status.",
+    "score": 90
+  },
+  "계_기": {
+    "ko_relation": "논밭에 내리는 비라네. 서로에게 꼭 필요한 존재이며 현실적인 이득을 만들어내니, 결혼이나 동업을 하면 재물을 불릴 수 있는 실속 있는 관계네.",
+    "en_relation": "Rain on rice paddies. Essential to each other, creating practical gain; a substantial relationship for marriage or partnership to grow wealth.",
+    "score": 88
+  },
+  "계_경": {
+    "ko_relation": "바위에서 샘물이 솟는 격이라네. 상대방이 나에게 끊임없이 사랑과 관심을 주니, 나는 받기만 해도 되는 편안하고 행복한 관계라네.",
+    "en_relation": "Spring water rising from a rock. The partner gives endless love and attention; a comfortable and happy relationship where you only need to receive.",
+    "score": 92
+  },
+  "계_신": {
+    "ko_relation": "보석을 씻어주는 맑은 물이라네. 서로가 서로를 맑고 깨끗하게 해주니, 정신적인 교감이 깊고 순수한 사랑을 나누는 소울메이트 같은 사이네.",
+    "en_relation": "Clear water washing a gem. Purifying each other, a soulmate-like relationship with deep spiritual communion and pure love.",
+    "score": 95
+  },
+  "계_임": {
+    "ko_relation": "비가 내려 강물이 불어나는 격이라네. 형제나 친구처럼 편안하지만, 물이 너무 많아지면 서로의 존재감이 희미해지고 휩쓸려 다닐 수 있네.",
+    "en_relation": "Rain swelling the river. Comfortable like siblings or friends, but too much water blurs presence and leads to being swept away.",
+    "score": 70
+  },
+  "계_계": {
+    "ko_relation": "장마철에 내리는 비라네. 우울함이 배가 되고 감정적으로 너무 깊이 빠져들 수 있으니, 서로에게 집착하기보다는 밝은 야외 활동을 함께 해야 하네.",
+    "en_relation": "Rain during the rainy season. Gloom doubles and emotional immersion deepens; engage in bright outdoor activities rather than obsessing over each other.",
+    "score": 50
+  },
+  "zizhi_interactions": {
+    "Six_Harmonies": {
+      "자축합": {
+        "ko_desc": "서로에게 헌신하고 감싸주는 부부 같은 인연. 겉으로 드러내지 않아도 속정이 깊다네.",
+        "risk": "과묵함과 비밀이 많아 속마음을 터놓지 않으면 관계가 답답해질 수 있네.",
+        "score_bonus": 15
+      },
+      "인해합": {
+        "ko_desc": "서로의 역마 기운을 합쳐 큰일을 도모하는 관계. 함께 움직일 때 시너지가 폭발하네.",
+        "risk": "일이나 외부 활동에 치중하다가 가정을 소홀히 하기 쉽네.",
+        "score_bonus": 10
+      },
+      "묘술합": {
+        "ko_desc": "겉으로는 평범하나 속궁합이나 정신적 교감이 깊은 관계. 애틋한 정으로 평생을 함께하네.",
+        "risk": "둘 다 고집이 강하고 자기주장이 세니, 한 번 다투면 화해하기 어렵네.",
+        "score_bonus": 8
+      },
+      "진유합": {
+        "ko_desc": "화려함과 실속을 겸비한 관계. 서로의 재물운을 키워주고 현실적인 만족도가 높네.",
+        "risk": "금전적인 이해관계가 얽히기 쉬우니, 돈 문제는 깔끔해야 하네.",
+        "score_bonus": 12
+      },
+      "사신합": {
+        "ko_desc": "물과 불이 합치듯, 갈등 속에서도 서로를 필요로 하는 관계. 애증의 기운이 강하네.",
+        "risk": "숨겨진 비밀이나 배신수가 따르기 쉬우니 주의해야 하네.",
+        "score_bonus": 5
+      },
+      "오미합": {
+        "ko_desc": "뜨거운 열정으로 시작된 관계. 서로의 마음을 잘 알아주고 위로가 되는 소울메이트라네.",
+        "risk": "너무 가까워 사소한 단점도 크게 보이니, 개인 공간이 필요하네.",
+        "score_bonus": 7
+      }
+    },
+    "Zhi_Chung": {
+      "자오충": {
+        "ko_desc": "물과 불이 정면으로 충돌하는 가장 격렬한 관계. 강렬하게 끌리지만 싸우면 끝을 보네. 이별수 최고.",
+        "risk": "감정 기복, 극심한 다툼, 별거/이혼 리스크.",
+        "score_deduction": 30
+      },
+      "묘유충": {
+        "ko_desc": "예민함과 섬세함이 충돌. 서로의 단점을 날카롭게 찌르니, 잔소리가 끊이지 않네.",
+        "risk": "정서적 피로, 신경질적 대립, 손재(손실), 건강 악화.",
+        "score_deduction": 20
+      },
+      "인신충": {
+        "ko_desc": "역마(이동)의 충돌. 한곳에 정착하지 못하고 분주히 돌아다니니, 잦은 출장이나 이사로 떨어져 지내기 쉽네.",
+        "risk": "교통사고, 부상, 주거 불안정, 성급한 투자로 인한 손실.",
+        "score_deduction": 25
+      },
+      "사해충": {
+        "ko_desc": "물불 안 가리는 성향의 충돌. 관재구설(법적 문제)이나 큰 사고를 유발할 수 있으니 가장 조심해야 하네.",
+        "risk": "법적 시비, 건강 급악화, 비밀 노출로 인한 망신살.",
+        "score_deduction": 35
+      },
+      "축미충": {
+        "ko_desc": "묵묵한 고집끼리의 충돌. 겉으로는 조용하나 속으로 쌓아두다 한 번 터지면 감당하기 어렵네.",
+        "risk": "냉전, 위장/소화기 질환, 부동산/재산 분쟁.",
+        "score_deduction": 15
+      },
+      "진술충": {
+        "ko_desc": "창고(고집)가 부딪히는 형국. 둘 다 비밀이 많고 남에게 굽히기 싫어하니, 서로의 속마음을 알기 어렵네.",
+        "risk": "의심, 배신, 금전적인 불신.",
+        "score_deduction": 18
+      }
+    },
+    "Zhi_Hyeong": {
+      "인사신형": {
+        "ko_desc": "세 가지 역마가 모여 형벌을 자초하는 격. 서로의 영역을 침범하고 간섭하여 깊은 상처를 주고받네.",
+        "risk": "수술, 사고, 구설수, 폭력성.",
+        "score_deduction": 28
+      },
+      "축술미형": {
+        "ko_desc": "믿는 도끼에 발등 찍히는 형국. 가까운 사이끼리 질투하고 시기하여 배신이 따르네.",
+        "risk": "돈 문제, 보증, 사기, 관재구설.",
+        "score_deduction": 22
+      },
+      "자묘형": {
+        "ko_desc": "무례지형(無禮之刑). 은밀한 관계나 비밀스러운 만남을 가졌으나, 결국 무례함으로 관계가 파탄 나네.",
+        "risk": "성추문, 망신살, 윤리적 문제.",
+        "score_deduction": 20
+      },
+      "오오형/진진형/유유형/해해형": {
+        "ko_desc": "스스로 자초하는 고통. 자기중심적이고 독단적인 성격 때문에 상대를 피곤하게 만드네.",
+        "risk": "우울증, 알코올 중독, 자해, 극단적인 성격 변화.",
+        "score_deduction": 15
+      }
+    }
+  }
+}
