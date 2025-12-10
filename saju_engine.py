@@ -61,22 +61,16 @@ JIJI_INTERACTIONS = {
 }
 
 # ==========================================
-# 2. 데이터베이스 로딩 및 관리 (수정됨)
+# 2. 데이터베이스 로딩 및 관리
 # ==========================================
 def load_all_dbs() -> Dict[str, Any]:
     """db_data 폴더에서 모든 JSON 파일을 로드"""
     db = {}
     db_files = {
-        'identity': 'identity_db.json',
-        'career': 'career_db.json',
-        'health': 'health_db.json',
-        'love': 'love_db.json',
-        'timeline': 'timeline_db.json',
-        'shinsal': 'shinsal_db.json',
-        'lifecycle_pillar': 'lifecycle_pillar_db.json',
-        'five_elements_matrix': 'five_elements_matrix.json',
-        'symptom_mapping': 'symptom_mapping.json',
-        'compatibility': 'compatibility_db.json'
+        'identity': 'identity_db.json', 'career': 'career_db.json', 'health': 'health_db.json',
+        'love': 'love_db.json', 'timeline': 'timeline_db.json', 'shinsal': 'shinsal_db.json',
+        'lifecycle_pillar': 'lifecycle_pillar_db.json', 'five_elements_matrix': 'five_elements_matrix.json',
+        'symptom_mapping': 'symptom_mapping.json', 'compatibility': 'compatibility_db.json'
     }
     
     current_dir = os.path.dirname(__file__)
@@ -109,7 +103,6 @@ def get_db_content(db, category, key, subkey=None, subsubkey=None, fallback=None
         return data.get(key, fallback)
     except:
         return fallback
-
 # ==========================================
 # 3. 천문 계산 (Julian Day & True Time)
 # ==========================================
@@ -241,19 +234,17 @@ def calculate_five_elements(saju_pillars: Dict[str, str]) -> Dict[str, Any]:
     weighted_counts['토'] = weighted_counts['토_습'] + weighted_counts['토_조']
 
     return {"visual": visual_counts, "weighted": weighted_counts}
-
 # ==========================================
-# 5. 스토리텔링 생성기 (Narrative)
+# 5. 스토리텔링 생성기 (Narrative) - Full Logic
 # ==========================================
 def generate_intro_summary(saju_pillars, oheng_counts, sibseong_data, db):
     day_gan = saju_pillars['day_gan']
     day_ji = saju_pillars['day_ji']
     
-    # [Fix] weighted 데이터 참조
     target_counts = oheng_counts['weighted']
     compare_set = {k: v for k, v in target_counts.items() if k in ['목', '화', '토', '금', '수']}
     
-    if not compare_set: main_elem = '토' # Fallback
+    if not compare_set: main_elem = '토' 
     else: main_elem = max(compare_set, key=compare_set.get)
     
     main_sibseong = max(sibseong_data['group_counts'], key=sibseong_data['group_counts'].get)
@@ -261,12 +252,10 @@ def generate_intro_summary(saju_pillars, oheng_counts, sibseong_data, db):
     identity_key = f"{day_gan}_{day_ji}"
     identity_data = get_db_content(db, 'identity', identity_key)
     
-    # [Fix] 데이터 누락 시 안전 처리
+    main_keyword = '특별한'
     if isinstance(identity_data, dict):
-        keywords = identity_data.get('keywords', ['특별한'])
-        main_keyword = keywords[0] if keywords else '특별한'
-    else:
-        main_keyword = '특별한'
+        keywords = identity_data.get('keywords', [])
+        if keywords: main_keyword = keywords[0]
 
     story = f"그대는 **{day_gan}** 일간으로 태어났으며, 사주 전반에 **{main_elem}** 기운과 **{main_sibseong}**의 성향이 가장 강하게 지배하고 있네. "
     story += f"특히 자네의 본원(자아)인 일주(**{day_gan}{day_ji}**)를 보니, **'{main_keyword}'**의 키워드가 자네의 무의식을 지배하고 있어."
@@ -276,8 +265,7 @@ def generate_identity_analysis(saju_pillars, db):
     key = f"{saju_pillars['day_gan']}_{saju_pillars['day_ji']}"
     data = get_db_content(db, 'identity', key)
     
-    # [Fix] 데이터가 딕셔너리가 아닌 경우 처리
-    if not isinstance(data, dict): return "데이터가 희미하네. 하지만 자네는 특별한 기운을 가졌어."
+    if not isinstance(data, dict): return "데이터가 희미하네."
 
     ko_desc = data.get('ko', '설명 없음')
     keywords = data.get('keywords', [])
@@ -305,7 +293,7 @@ def generate_health_diagnosis(oheng_counts, saju_pillars, db):
     
     if not isinstance(data, dict) or not diag_key: return "자네의 오행은 비교적 조화롭네. 건강은 자네가 지키는 법이지."
 
-    story = f"**☔ {data.get('name', '진단')} (환경 진단)** - 이 신령이 자네의 환경을 먼저 짚어보네."
+    story = f"**☔ {data.get('name', '건강 진단')} (환경 진단)** - 이 신령이 자네의 환경을 먼저 짚어보네."
     story += f"\n* **환경/주거지:** {data.get('environment_cue', '')}"
     story += f"\n* **신체 증상:** {', '.join(data.get('physical_symptoms', []))}"
     story += f"\n* **정서 리스크:** {data.get('emotional_state', '')}"
@@ -326,8 +314,6 @@ def generate_special_risks(saju_pillars, sibseong_data, db):
     jaeseong_count = sibseong_data['group_counts'].get('재성', 0)
     self_strength = sibseong_data['group_counts'].get('비겁', 0) + sibseong_data['group_counts'].get('인성', 0)
     is_jaedasin_yak = (jaeseong_count >= 3.5) and (self_strength <= 3.0)
-    
-    # 관살혼잡 로직 추가 (여성 등) - 관성 3.0 이상
     is_gwansal = sibseong_data['group_counts'].get('관성', 0) >= 3.0
 
     results = []
@@ -335,23 +321,23 @@ def generate_special_risks(saju_pillars, sibseong_data, db):
     if is_gwegang:
         data = get_db_content(db, 'five_elements_matrix', 'ten_gods_interactions', '무진_괴강살(Gwegang_Star)')
         if isinstance(data, dict):
-            results.append({'title': f"일주에 깃든 **괴강살**", 'content': f"**{data.get('effect_ko')}**\n**신령의 처방:** {data.get('remedy_advice')}"})
+            results.append({'title': f"일주에 깃든 **괴강살**", 'content': f"**{data.get('effect_ko')}**\n**신령의 처방:** {data.get('remedy_advice')}\n*신령의 일침:* {data.get('shamanic_voice')}"})
     
     if is_jaedasin_yak:
         data = get_db_content(db, 'five_elements_matrix', 'ten_gods_interactions', 'Wealth_Dominance')
         if isinstance(data, dict):
-            results.append({'title': "재물에 휘둘리는 **재다신약**", 'content': f"**{data.get('effect_ko')}**\n**신령의 처방:** {data.get('remedy_advice')}"})
+            results.append({'title': "재물에 휘둘리는 **재다신약**", 'content': f"**{data.get('effect_ko')}**\n**신령의 처방:** {data.get('remedy_advice')}\n*신령의 일침:* {data.get('shamanic_voice')}"})
 
     if is_gwansal:
         data = get_db_content(db, 'five_elements_matrix', 'ten_gods_interactions', 'Official_Killings_Mixed')
         if isinstance(data, dict):
-            results.append({'title': "나를 억누르는 **관살혼잡**", 'content': f"**{data.get('effect_ko')}**\n**신령의 처방:** {data.get('remedy_advice')}"})
+            results.append({'title': "나를 억누르는 **관살혼잡**", 'content': f"**{data.get('effect_ko')}**\n**신령의 처방:** {data.get('remedy_advice')}\n*신령의 일침:* {data.get('shamanic_voice')}"})
 
     lacks = {'인성': sibseong_data['group_counts'].get('인성', 0), '식상': sibseong_data['group_counts'].get('식상', 0)}
     for sib_name, count in lacks.items():
         if count <= 0.5:
             risk_desc = "정신적 지지 부족" if sib_name == '인성' else "표현력 부족"
-            results.append({'title': f"**{sib_name}** 결핍 ({count}점)", 'content': f"{sib_name}이 부족하여 **{risk_desc}**을 겪을 수 있네."})
+            results.append({'title': f"**{sib_name}** 결핍 ({count}점)", 'content': f"{sib_name}이 부족하여 **{risk_desc}**을 겪을 수 있네. 인성과 식상을 보완하는 노력이 필요하네."})
 
     return results
 
@@ -363,7 +349,11 @@ def generate_career_analysis(sibseong_data, db):
     
     if not isinstance(data, dict): return "분석 데이터 부족."
     
-    story = f"그대는 **{main_sibseong}**의 기운이 강하네. **현대 직업:** {data.get('jobs', '')}\n**신령의 충고:** {data.get('shamanic_voice', '')}"
+    story = f"그대는 **{main_sibseong}**의 기운이 가장 강하니, 이것이 곧 사회적 능력이네. "
+    story += f"\n* **타고난 기질:** {data.get('trait', '')}"
+    story += f"\n* **현대 직업:** {data.get('jobs', '')}"
+    story += f"\n* **업무 스타일:** {data.get('work_style', '')}"
+    story += f"\n\n**신령의 충고:** {data.get('shamanic_voice', '')}"
     return story
 
 def generate_love_psychology(sibseong_data, user_data, db):
@@ -372,15 +362,20 @@ def generate_love_psychology(sibseong_data, user_data, db):
     self_strength = sibseong_data['group_counts'].get('비겁', 0) + sibseong_data['group_counts'].get('인성', 0)
     gwansal_count = sibseong_data['group_counts'].get('관성', 0)
     
-    story = "그대의 연애 심리는... "
+    story = "그대의 연애 심리는 사주 원국에 깊이 뿌리내리고 있네. "
+    
     if gender == '남' and jaeseong_count >= 3.0 and self_strength <= 3.0:
         data = get_db_content(db, 'love', 'conflict_triggers', 'wealth_dominance_male')
         if isinstance(data, dict):
-            story += f"**재다신약 남성**의 패턴이네. {data.get('fight_reason')}\n신령의 한마디: {data.get('shamanic_voice')}"
+            story += f"남성 사주에 재성(여자/돈)은 강하고 신약하니 **재다신약 남성**의 심리가 강하네. "
+            story += f"자네는 {data.get('partner_context')}에 휘둘리기 쉽네. "
+            story += f"**갈등 원인:** {data.get('fight_reason', '우유부단함')}. "
+            story += f"\n\n**신령의 한마디:** \"{data.get('shamanic_voice')}\""
     elif gender == '여' and gwansal_count >= 3.0:
         data = get_db_content(db, 'love', 'conflict_triggers', 'official_killing_mixed_female')
         if isinstance(data, dict):
-            story += f"**관살혼잡 여성**의 패턴이네. {data.get('fight_reason')}\n신령의 한마디: {data.get('shamanic_voice')}"
+            story += f"**관살혼잡 여성**의 패턴이네. {data.get('desc')} "
+            story += f"**갈등 원인:** {data.get('fight_reason')}\n\n**신령의 한마디:** {data.get('shamanic_voice')}"
     else:
         story += "평이한 연애운을 가졌으나, 욕심을 버리고 서로 배려해야 하네."
     return story
@@ -388,28 +383,89 @@ def generate_love_psychology(sibseong_data, user_data, db):
 def generate_shinsal_analysis(saju_pillars, db):
     shinsal_list = []
     jis = [saju_pillars['year_ji'], saju_pillars['month_ji'], saju_pillars['day_ji'], saju_pillars['time_ji']]
+    
     if any(ji in ['자', '묘', '오', '유'] for ji in jis): shinsal_list.append('도화살(Peach_Blossom)')
     if any(ji in ['인', '신', '사', '해'] for ji in jis): shinsal_list.append('역마살(Stationary_Horse)')
+    if any(ji in ['진', '술', '축', '미'] for ji in jis): shinsal_list.append('화개살(Art_Cover)')
     
-    story = "특수 신살 분석:\n"
-    for s in set(shinsal_list):
-        data = get_db_content(db, 'shinsal', 'basic_meanings', s)
+    story = "자네 사주에는 다음의 **특수 신살(神殺)**이 깃들어 있네."
+    
+    if not shinsal_list: return story + " 특별한 살성은 없으니 평이하나, 큰 재주도 큰 리스크도 없는 무난한 운명이네."
+    
+    for shinsal_key in set(shinsal_list):
+        data = get_db_content(db, 'shinsal', 'basic_meanings', shinsal_key)
         if isinstance(data, dict):
-            story += f"\n**{s.split('(')[0]}**: {data.get('desc')} (긍정: {data.get('positive')})"
-    if not shinsal_list: story += "특별한 신살은 없네."
+            story += f"\n\n**{shinsal_key.split('(')[0]}**"
+            story += f"\n- **설명:** {data.get('desc', '정보없음')}"
+            story += f"\n- **긍정 발현:** {data.get('positive', '정보없음')}"
+            story += f"\n- **부정 발현:** {data.get('negative', '없음')}"
+
+    story += "\n\n이러한 살성들은 잘 쓰면 자네의 **특별한 재능**이 되지만, 잘못 쓰면 **평생의 걸림돌**이 되니 늘 마음을 다스려야 하네."
     return story
 
 def generate_yearly_fortune(saju_pillars, db):
     day_gan = saju_pillars['day_gan']
+    
+    year_data = get_db_content(db, 'timeline', 'yearly_2025_2026', day_gan)
     q4_data = get_db_content(db, 'timeline', 'monthly_highlights_2025', 'Q4_Winter')
-    story = f"**2025년 을사년 운세**\n"
+    sa_hae_data = get_db_content(db, 'compatibility', 'zizhi_interactions', 'Zhi_Chung', '사해충')
+    
+    ganji_2025 = get_db_content(db, 'timeline', 'yearly_ganji', '2025', fallback='을사년')
+    
+    story = f"**⚡️ 2025년 (을사) {ganji_2025} 세운 분석** - **'푸른 뱀의 해'** 운세"
+    if isinstance(year_data, dict):
+        story += f"\n\n**주요 기운:** {year_data.get('2025', '정보없음')}"
+    
     if isinstance(q4_data, dict):
-        story += f"**겨울 경고:** {q4_data.get('advice')}"
+        story += f"\n\n**📌 신령의 월별 경고 (Q4):**"
+        story += f"\n{q4_data.get('months', '겨울')}은(는) 올해 마지막 고비네."
+        desc = sa_hae_data.get('ko_desc', '충돌 위험') if isinstance(sa_hae_data, dict) else '충돌 위험'
+        story += f" 뱀과 돼지가 부딪히니({desc}), {q4_data.get('risk_event', '리스크')}가 따르네."
+        story += f"\n*신령의 일침:* \"{q4_data.get('shamanic_warning', '조심하게')}\""
+    
     return story
 
+# [복구 및 로직 강화] 라이프사이클 분석
 def generate_lifecycle_analysis(saju_pillars, sibseong_data, db):
-    # 간단화된 라이프사이클 (예시)
-    return "**라이프사이클 분석:** 초년, 청년, 중년, 말년의 흐름을 DB에서 가져와 해석합니다."
+    day_gan = saju_pillars['day_gan']
+    
+    year_sib = SIBSEONG_MAP[(day_gan, saju_pillars['year_gan'])]
+    month_sib = SIBSEONG_MAP[(day_gan, saju_pillars['month_gan'])]
+    day_sib = SIBSEONG_MAP[(day_gan, saju_pillars['day_gan'])]
+    time_sib = SIBSEONG_MAP[(day_gan, saju_pillars['time_gan'])]
+    
+    y_stage_desc = get_db_content(db, 'timeline', 'life_stages_detailed', 'high_school', 'desc')
+    y_content = get_db_content(db, 'lifecycle_pillar', 'year_pillar', year_sib, 'ko_desc')
+    
+    m_stage_desc = get_db_content(db, 'timeline', 'life_stages_detailed', 'social_entry', 'desc')
+    m_content = get_db_content(db, 'lifecycle_pillar', 'month_pillar', month_sib, 'ko_desc')
+    
+    d_stage_desc = get_db_content(db, 'timeline', 'life_stages_detailed', 'expansion', 'desc')
+    d_content = get_db_content(db, 'lifecycle_pillar', 'day_pillar', day_sib, 'ko_desc')
+    
+    t_stage_desc = get_db_content(db, 'timeline', 'life_stages_detailed', 'seniority', 'desc')
+    t_content = get_db_content(db, 'lifecycle_pillar', 'time_pillar', time_sib, 'ko_desc')
+    
+    story = ""
+    # Safe text handling
+    y_stage_txt = y_stage_desc if isinstance(y_stage_desc, str) else "초년운"
+    m_stage_txt = m_stage_desc if isinstance(m_stage_desc, str) else "청년운"
+    d_stage_txt = d_stage_desc if isinstance(d_stage_desc, str) else "중년운"
+    t_stage_txt = t_stage_desc if isinstance(t_stage_desc, str) else "말년운"
+
+    story += f"**🕰️ 초년운 (0~19세)** - {y_stage_txt.split('.')[0]}을 의미하네."
+    story += f"\n이 시기의 주요 기운인 **{year_sib}**의 영향으로, {y_content}\n\n"
+    
+    story += f"**🕰️ 청년운 (20~39세)** - {m_stage_txt.split('.')[0]}던 때네."
+    story += f"\n이 시기의 주요 기운인 **{month_sib}**의 영향으로, {m_content}\n\n"
+    
+    story += f"**🕰️ 중년운 (40~59세)** - {d_stage_txt.split('.')[0]}하는 시기네."
+    story += f"\n이 시기의 주요 기운인 **{day_sib}**의 영향으로, {d_content}\n\n"
+    
+    story += f"**🕰️ 말년운 (60세 이후)** - {t_stage_txt.split('.')[0]}는 시기네."
+    story += f"\n이 시기의 주요 기운인 **{time_sib}**의 영향으로, {t_content}"
+    
+    return story
 
 # ==========================================
 # 6. 메인 프로세서 (Main Processor)
@@ -478,7 +534,6 @@ def process_love_compatibility(user_a, user_b, db):
     adjustment = 0
     zizhi_analysis = []
     
-    # 일지
     ikey, idata = get_zizhi_interaction_data(ji_a, ji_b, db)
     if ikey and idata:
         is_clash = '충' in ikey or '형' in ikey
@@ -488,13 +543,19 @@ def process_love_compatibility(user_a, user_b, db):
         
     final_score = max(0, min(100, base_score + adjustment))
     
+    synergy_data = get_db_content(db, 'love', 'synergy_patterns', 'Five_Elements_Temperature_Complement', '조열보완')
+    synergy_desc = f"습윤 보완의 인연. A의 뜨거운 기운을 B가 식혀주는 조후의 인연\n"
+    if isinstance(synergy_data, dict):
+        synergy_desc += f"{synergy_data.get('synergy_ko', '')}"
+
     analytics = []
     analytics.append({"type": "RESULT", "title": f"💖 궁합 총점: {final_score}점", "content": f"{comp_data.get('ko_relation')}\n기본: {base_score} + 조정: {adjustment} = {final_score}"})
     
     if zizhi_analysis:
         analytics.append({"type": "INTERACTION", "title": "지지 상호작용", "content": "\n".join(zizhi_analysis)})
         
-    # 특수 패턴 (정임합)
+    analytics.append({"type": "TEMPERATURE", "title": "🌡️ 오행 온도(調候) 보완 분석", "content": synergy_desc})
+
     if check_ding_ren_harmony(saju_a, saju_b):
         adv = get_db_content(db, 'love', 'shamanic_advice', 'jung_im_harmony_deep_advice')
         if isinstance(adv, dict):
