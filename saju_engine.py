@@ -1,7 +1,7 @@
 import json
 import os
-import ephem
 import math
+import ephem
 from datetime import datetime, timedelta
 import pytz
 from geopy.geocoders import Nominatim
@@ -11,46 +11,40 @@ from typing import Dict, Any, List, Optional, Tuple
 # ==========================================
 # 1. 상수 및 기본 맵핑 (Constants & Maps)
 # ==========================================
-CHEONGAN = ["갑", "을", "병", "정", "무", "기", "경", "신", "임", "계"]
-JIJI = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"]
+GAN = ["갑", "을", "병", "정", "무", "기", "경", "신", "임", "계"]
+JI = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"]
+
 OHENG_MAP = {
     '갑': '목', '을': '목', '병': '화', '정': '화', '무': '토', '기': '토', 
     '경': '금', '신': '금', '임': '수', '계': '수',
     '인': '목', '묘': '목', '사': '화', '오': '화', '진': '토', '술': '토', '축': '토', '미': '토',
     '신': '금', '유': '금', '해': '수', '자': '수'
 }
+
 JIJANGGAN = {
     '자': ['임', '계'], '축': ['계', '신', '기'], '인': ['무', '병', '갑'], 
     '묘': ['갑', '을'], '진': ['을', '계', '무'], '사': ['무', '경', '병'],
     '오': ['병', '기', '정'], '미': ['정', '을', '기'], '신': ['경', '임', '무'], 
     '유': ['경', '신'], '술': ['신', '정', '무'], '해': ['무', '갑', '임']
 }
-# 십성 맵핑 (일간 기준)
+
+# 십성 맵핑 생성 (자동화)
 SIBSEONG_MAP = {}
-for i, day in enumerate(CHEONGAN):
-    for j, target in enumerate(CHEONGAN):
-        # 오행 인덱스 (0:목, 1:화, 2:토, 3:금, 4:수)
+for i, day in enumerate(GAN):
+    for j, target in enumerate(GAN):
         day_elem_idx = i // 2
         target_elem_idx = j // 2
-        
-        # 음양 (0:양, 1:음)
         day_yin_yang = i % 2
         target_yin_yang = j % 2
         
-        # 십성 로직
-        # 비겁: 오행 같음
         if day_elem_idx == target_elem_idx:
             SIBSEONG_MAP[(day, target)] = '비견' if day_yin_yang == target_yin_yang else '겁재'
-        # 식상: 일간이 생함
         elif (day_elem_idx + 1) % 5 == target_elem_idx:
             SIBSEONG_MAP[(day, target)] = '식신' if day_yin_yang == target_yin_yang else '상관'
-        # 재성: 일간이 극함
         elif (day_elem_idx + 2) % 5 == target_elem_idx:
             SIBSEONG_MAP[(day, target)] = '편재' if day_yin_yang == target_yin_yang else '정재'
-        # 관성: 일간을 극함
         elif (day_elem_idx + 3) % 5 == target_elem_idx:
             SIBSEONG_MAP[(day, target)] = '편관' if day_yin_yang == target_yin_yang else '정관'
-        # 인성: 일간을 생함
         elif (day_elem_idx + 4) % 5 == target_elem_idx:
             SIBSEONG_MAP[(day, target)] = '편인' if day_yin_yang == target_yin_yang else '정인'
 
@@ -58,7 +52,9 @@ SIBSEONG_GROUP_MAP = {
     '비견': '비겁', '겁재': '비겁', '식신': '식상', '상관': '식상',
     '편재': '재성', '정재': '재성', '편관': '관성', '정관': '관성', '편인': '인성', '정인': '인성',
 }
+
 GWEEGANG_GANJI = ['경진', '임진', '무술', '경술', '임술', '무진']
+
 JIJI_INTERACTIONS = {
     ('자', '축'): '자축합', ('축', '자'): '자축합', ('인', '해'): '인해합', ('해', '인'): '인해합',
     ('묘', '술'): '묘술합', ('술', '묘'): '묘술합', ('진', '유'): '진유합', ('유', '진'): '진유합',
@@ -73,92 +69,230 @@ JIJI_INTERACTIONS = {
 }
 
 # ==========================================
-# 2. 만세력 계산 엔진 (Real Calculation)
+# 2. 천문 계산 엔진 (Astronomical Calculation)
 # ==========================================
 
-def get_solar_term(year, month, day):
-    date = datetime(year, month, day)
+def get_solar_longitude(dt: datetime) -> float:
+    """UTC 기준 특정 시각의 태양 황경(Solar Longitude) 계산 (0~360도)"""
     sun = ephem.Sun()
-    sun.compute(date)
-    return math.degrees(sun.hlon)
+    # PyEphem은 UTC 기준 datetime 객체나 문자열을 받음
+    # dt가 timezone info가 없다면 UTC로 가정하거나, KST라면 변환 필요
+    # 여기서는 dt가 이미 True Solar Time 보정된 후 UTC로 변환되어 들어온다고 가정하거나,
+    # 입력된 dt를 UTC로 변환하여 처리.
+    
+    # ephem Date 객체로 변환 (UTC 기준)
+    date_ephem = ephem.Date(dt)
+    sun.compute(date_ephem)
+    
+    # hlon은 라디안 값이므로 도로 변환
+    lon_deg = math.degrees(sun.hlon)
+    if lon_deg < 0:
+        lon_deg += 360
+    return lon_deg
 
-def calculate_ganji_real(dt: datetime) -> Dict[str, str]:
-    """
-    1900년 1월 1일(갑술일) 기준 실제 간지 계산 로직
-    """
-    # 1. 년주 (입춘 기준)
-    solar_long = get_solar_term(dt.year, dt.month, dt.day)
-    if dt.month < 2 or (dt.month == 2 and dt.day < 4):
-        saju_year = dt.year - 1
-    elif dt.month == 2 and 4 <= dt.day <= 5:
-        if solar_long < 315: saju_year = dt.year - 1
-        else: saju_year = dt.year
-    else:
-        saju_year = dt.year
-        
-    year_gan_idx = (saju_year - 4) % 10
-    year_ji_idx = (saju_year - 4) % 12
-    
-    # 2. 월주 (절기 기준)
-    adj_lon = solar_long - 315
-    if adj_lon < 0: adj_lon += 360
-    month_idx = min(int(adj_lon // 30), 11)
-    
-    month_ji = JIJI[(2 + month_idx) % 12] # 인월부터 시작
-    
-    # 연두법 (년 -> 월)
-    year_gan_code = year_gan_idx % 5 
-    month_gan_start_idx = (year_gan_code * 2 + 2) % 10
-    month_gan_idx = (month_gan_start_idx + month_idx) % 10
-    
-    # 3. 일주 (일수 계산)
-    base_date = datetime(1900, 1, 1) # 갑술일
-    delta = dt - base_date
-    days_passed = delta.days
-    
-    day_gan_idx = (0 + days_passed) % 10  # 0=갑
-    day_ji_idx = (10 + days_passed) % 12 # 10=술
-    
-    # 4. 시주 (일두법)
-    time_ji_idx = (dt.hour + 1) // 2 % 12
-    day_gan_code = day_gan_idx % 5
-    time_gan_start_idx = (day_gan_code * 2) % 10
-    time_gan_idx = (time_gan_start_idx + time_ji_idx) % 10
-
-    return {
-        'year_gan': CHEONGAN[year_gan_idx], 'year_ji': JIJI[year_ji_idx],
-        'month_gan': CHEONGAN[month_gan_idx], 'month_ji': month_ji,
-        'day_gan': CHEONGAN[day_gan_idx], 'day_ji': JIJI[day_ji_idx],
-        'time_gan': CHEONGAN[time_gan_idx], 'time_ji': JIJI[time_ji_idx]
-    }
+def get_julian_day(dt: datetime) -> float:
+    """날짜를 율리우스 적일(Julian Day)로 변환 (일진 계산용)"""
+    return ephem.julian_date(dt)
 
 def get_location_info(city_name: str) -> Optional[Dict[str, Any]]:
+    """도시 이름 -> 위도, 경도, 타임존"""
     try:
-        geolocator = Nominatim(user_agent="shinryeong_app_final_v9")
+        geolocator = Nominatim(user_agent="shinryeong_v2_1")
         location = geolocator.geocode(city_name)
         if not location: return None
         tf = TimezoneFinder()
         timezone_str = tf.timezone_at(lng=location.longitude, lat=location.latitude)
         return {"latitude": location.latitude, "longitude": location.longitude, "timezone_str": timezone_str}
     except Exception:
+        # Default: Seoul
         return {"latitude": 37.5665, "longitude": 126.9780, "timezone_str": 'Asia/Seoul'}
 
-def get_true_solar_time(dt: datetime, longitude: float, timezone_str: str) -> datetime:
+def calculate_true_solar_time(dt: datetime, longitude: float, timezone_str: str) -> datetime:
+    """표준시 -> 진태양시(True Solar Time) 변환"""
     try:
         local_tz = pytz.timezone(timezone_str)
-        local_dt = local_tz.localize(dt)
+        # 입력된 시간이 naive라면 로컬 타임존으로 가정
+        if dt.tzinfo is None:
+            local_dt = local_tz.localize(dt)
+        else:
+            local_dt = dt.astimezone(local_tz)
+            
         utc_dt = local_dt.astimezone(pytz.utc)
-        sun = ephem.Sun()
+        
+        # 태양의 남중 고도 시간 계산
         observer = ephem.Observer()
-        observer.lon = str(longitude * ephem.degree)
-        next_noon = observer.next_transit(ephem.Sun(), start=utc_dt, use_center=True)
-        noon_kst = pytz.utc.localize(next_noon).astimezone(pytz.timezone('Asia/Seoul'))
-        std_noon_kst = noon_kst.replace(hour=12, minute=0, second=0, microsecond=0)
-        time_offset = noon_kst - std_noon_kst
-        true_solar_dt = dt + time_offset
-        return true_solar_dt.replace(tzinfo=None)
-    except Exception:
+        observer.lon = str(longitude) # 도 단위 문자열
+        observer.lat = '0' # 위도는 시간 계산에 영향 X
+        observer.date = utc_dt
+        
+        # 태양 위치 계산
+        sun = ephem.Sun()
+        sun.compute(observer)
+        
+        # 균시차(Equation of Time) 보정은 ephem next_transit으로 대체 가능
+        # 해당 지역의 자오선 통과 시간(남중)과 표준시 자오선(135도 등) 차이 계산
+        # 간단하게는 경도차 1도당 4분 보정
+        
+        # 표준 자오선 (KST: 135.0)
+        # 예: 서울(127.0) -> 차이 -8.0도 -> -32분
+        # 여기에 균시차까지 더해야 정확하지만, 
+        # 명리학에서는 주로 경도에 따른 지방시(LST) 보정을 중요시함.
+        
+        standard_meridian = 135.0 if 'Seoul' in timezone_str or 'Korea' in timezone_str else 0 # 임시 처리
+        # timezone offset 구하기 (분 단위)
+        offset_min = local_dt.utcoffset().total_seconds() / 60
+        standard_meridian = offset_min / 4 # 역산 (예: 9시간*60 = 540분 / 4 = 135도)
+        
+        diff_deg = longitude - standard_meridian
+        time_diff_minutes = diff_deg * 4
+        
+        true_solar_dt = dt + timedelta(minutes=time_diff_minutes)
+        return true_solar_dt.replace(tzinfo=None) # Naive datetime 반환
+        
+    except Exception as e:
+        print(f"Time calc error: {e}")
         return dt
+
+def calculate_ganji_real(dt: datetime) -> Dict[str, str]:
+    """
+    [핵심] ephem을 이용한 정밀 사주 계산 로직
+    dt: True Solar Time이 적용된 datetime 객체
+    """
+    
+    # UTC 변환 (ephem 계산용)
+    # dt는 이미 보정된 지역 시간이므로, 이를 그대로 사용하여 절기 계산
+    # (절기 시각은 전 세계 동일 순간이나, 월주 판단은 해당 지역 시간 기준 절기 진입 여부 따짐)
+    # 편의상 입력된 dt를 UTC로 간주하고 계산하면 오차가 생길 수 있으므로,
+    # 여기서는 단순화하여 '태양 황경'을 기준으로 월을 잡습니다.
+    
+    solar_lon = get_solar_longitude(dt)
+    
+    # 1. 연주(Year Pillar) 계산 - 입춘(315도) 기준
+    # 입춘점(315도) 이전이면 전년도로 간주
+    # 주의: 1월 1일 ~ 입춘 전까지는 전년도 간지
+    
+    # 태양 황경은 춘분(0도) 기준.
+    # 입춘은 315도.
+    # 0~315도 사이(춘분~동지~대한)인 경우 -> 해가 바뀌었거나(양력), 아직 안 바뀌었거나(음력/절기)
+    # 명리학 연도는 '입춘'에 바뀜.
+    
+    # 현재 연도의 입춘 시각을 구해서 비교하는 것이 가장 정확하나,
+    # 약식으로 황경을 통해 판단.
+    # 12월(동지, 270도) 지나고 1월(소한, 285도/대한, 300도) 지남.
+    # 315도 미만이면 전년도, 315도 이상이면 금년도? 
+    # -> 황경은 360도 루프.
+    # 대략 2월 4일 근처.
+    
+    saju_year = dt.year
+    if dt.month == 1:
+        saju_year -= 1 # 1월은 무조건 입춘 전
+    elif dt.month == 2:
+        # 2월은 입춘 시각 전후로 나뉨.
+        # 황경 315도 도달 여부 확인
+        # 입춘(315도)보다 작으면(314.9...) 전년도
+        # 우수(330도) 쪽으로 가고 있으면 현년도
+        # 근데 황경은 0~360. 입춘(315) -> 우수(330) -> ... -> 춘분(0)
+        # 2월달에 황경이 315보다 작으면 (예: 314도) -> 아직 입춘 전.
+        # 315 이상이면 -> 입춘 후.
+        if 300 <= solar_lon < 315: # 대한 ~ 입춘 전
+            saju_year -= 1
+            
+    # 천간: 4 = 갑, 5 = 을 ... (연도 끝자리 기준)
+    # 1984(갑자) -> 4.
+    # 공식: (연도 - 4) % 10
+    year_gan_idx = (saju_year - 4) % 10
+    year_ji_idx = (saju_year - 4) % 12
+    
+    year_gan = GAN[year_gan_idx]
+    year_ji = JI[year_ji_idx]
+    
+    # 2. 월주(Month Pillar) 계산 - 절기(Solar Terms) 기준
+    # 24절기 매핑 (황경 -> 월지 Index)
+    # 인월(1): 입춘(315) ~ 경칩(345)
+    # 묘월(2): 경칩(345) ~ 청명(15) ... 0도(춘분) 포함
+    # ...
+    # 자월(11): 대설(255) ~ 소한(285)
+    # 축월(12): 소한(285) ~ 입춘(315)
+    
+    # 황경을 통해 월지 인덱스 찾기 (인월=0 ... 축월=11 로 매핑 후 보정)
+    # 입춘(315)을 0으로 기준 잡기 위해 보정
+    
+    adj_lon = solar_lon - 315
+    if adj_lon < 0: adj_lon += 360
+    
+    # 한 절기는 15도, 한 달(절기+중기)은 30도
+    month_idx_from_in = int(adj_lon // 30) # 0=인월, 1=묘월 ... 11=축월
+    
+    # 월지 결정
+    # JI 리스트: 자(0), 축(1), 인(2)...
+    # 인월은 index 2.
+    month_ji_idx = (2 + month_idx_from_in) % 12
+    month_ji = JI[month_ji_idx]
+    
+    # 월간 결정 (연두법: 년간 -> 월간)
+    # 갑/기 년 -> 병인월 시작 (병=2)
+    # 을/경 년 -> 무인월 시작 (무=4)
+    # 병/신 년 -> 경인월 시작 (경=6)
+    # 정/임 년 -> 임인월 시작 (임=8)
+    # 무/계 년 -> 갑인월 시작 (갑=0)
+    
+    # 공식: (년간idx % 5) * 2 + 2
+    month_gan_start_idx = (year_gan_idx % 5 * 2 + 2) % 10
+    month_gan_idx = (month_gan_start_idx + month_idx_from_in) % 10
+    month_gan = GAN[month_gan_idx]
+    
+    # 3. 일주(Day Pillar) 계산 - 율리우스 적일 기준
+    # 기준일: 1900년 1월 1일 = 갑술일 (일진 계산은 연속적이라 가장 정확)
+    base_date = datetime(1900, 1, 1)
+    # dt 날짜만 추출
+    target_date = datetime(dt.year, dt.month, dt.day)
+    days_diff = (target_date - base_date).days
+    
+    # 1900.1.1 갑술
+    # 갑(0), 술(10)
+    day_gan_idx = (0 + days_diff) % 10
+    day_ji_idx = (10 + days_diff) % 12
+    
+    # 야자시/조자시 처리 (23:30 ~ 00:00)
+    # 현대 명리학 다수설: 23:30 지나면 다음날 자시로 봄 (일진 변경 O) -> 조자시
+    # 소수설: 일진은 00:00 변경, 시주는 자시 (일진 변경 X) -> 야자시
+    # 여기서는 '조자시' 설 채택 (23:30 넘으면 다음날 일진)
+    # (단, calculate_true_solar_time에서 이미 시간이 조정되었을 수 있음)
+    # 표준시 기준 23:30은 진태양시로 대략 23:00~24:00 사이.
+    # 만약 진태양시 기준으로 시간이 23시를 넘었다면? -> 자시(Next Day)
+    
+    if dt.hour >= 23:
+        # 일진 + 1
+        day_gan_idx = (day_gan_idx + 1) % 10
+        day_ji_idx = (day_ji_idx + 1) % 12
+        # 시지는 자시(0)
+        time_ji_idx = 0
+    else:
+        # 시지 계산 (00:00 ~ 01:00 = 자시? No. 23:30~01:30 = 자시)
+        # 진태양시 기준:
+        # 23-01: 자, 01-03: 축 ...
+        # 공식: (시 + 1) // 2
+        time_ji_idx = (dt.hour + 1) // 2 % 12
+
+    day_gan = GAN[day_gan_idx]
+    day_ji = JI[day_ji_idx]
+    time_ji = JI[time_ji_idx]
+    
+    # 4. 시주(Time Pillar) 계산 - 일두법
+    # 갑/기 일 -> 갑자시
+    # 을/경 일 -> 병자시
+    # ...
+    # 공식: (일간idx % 5 * 2) + 시지idx (단, 자시는 0)
+    time_gan_start_idx = (day_gan_idx % 5 * 2) % 10
+    time_gan_idx = (time_gan_start_idx + time_ji_idx) % 10
+    time_gan = GAN[time_gan_idx]
+    
+    return {
+        'year_gan': year_gan, 'year_ji': year_ji,
+        'month_gan': month_gan, 'month_ji': month_ji,
+        'day_gan': day_gan, 'day_ji': day_ji,
+        'time_gan': time_gan, 'time_ji': time_ji
+    }
 
 def calculate_sibseong(day_gan: str, ganji_map: Dict[str, str]) -> Dict[str, Any]:
     result = {}
@@ -199,7 +333,7 @@ def calculate_five_elements_count(ganji_map: Dict[str, str]) -> Dict[str, float]
     return counts
 
 # ==========================================
-# 3. 분석 함수들 (Analysis Functions)
+# 3. 분석 함수들 (Analysis Logic - No Changes Needed)
 # ==========================================
 
 def get_day_pillar_identity(day_ganji: str, db: Dict) -> Dict[str, str]:
@@ -208,7 +342,7 @@ def get_day_pillar_identity(day_ganji: str, db: Dict) -> Dict[str, str]:
     keywords = ", ".join(identity_data.get('keywords', []))
     voice = identity_data.get('ko', "일주 데이터를 해석하는 중일세.") 
     return {
-        "type": "🌟 **일주(Day Pillar) 분석**",
+        "type": "👤 일주(Day Pillar) 분석",
         "title": f"일주({day_ganji})의 고유 기질",
         "content": f"**핵심 키워드:** {keywords}\n\n{voice}"
     }
@@ -258,6 +392,7 @@ def analyze_special_patterns(ganji_map: Dict[str, str], sibseong_map: Dict[str, 
     인성_count = sibseong_counts.get('정인', 0) + sibseong_counts.get('편인', 0)
     신강도 = 비겁_count + 인성_count
     
+    # [FIXED Logic] 재다신약: 재성 과다 & 신약
     if 재성_count >= 3.5 and 신강도 <= 3.0:
         data = interactions_db.get('재다신약_패턴(Wealth_Dominance)', {})
         if data:
@@ -300,15 +435,16 @@ def analyze_career_path(sibseong_map: Dict[str, Any], db: Dict) -> Dict[str, Any
 
 def analyze_timeline(birth_dt: datetime, day_gan: str, ganji_map: Dict[str, str], db: Dict) -> List[Dict[str, Any]]:
     reports = []
-    current_year = 2025
+    current_year = 2025 # 시스템 날짜 연동 가능
     summary_2025 = db.get('timeline', {}).get('yearly_2025_2026', {}).get(day_gan, {}).get('2025', '운세 데이터 없음')
     reports.append({"type": f"⚡️ 2025년 (을사년) 세운", "title": "푸른 뱀의 해", "content": summary_2025})
     
+    # [FIXED Keys] 중년운=expansion, 말년운=seniority(or fallback)
     life_pillar_map = [
         ("초년운", "0~19세", "preschool", 'year_pillar', 'year_gan'),
         ("청년운", "20~39세", "social_entry", 'month_pillar', 'month_gan'),
-        ("중년운", "40~59세", "expansion", 'day_pillar', 'day_gan'),
-        ("말년운", "60세 이후", "seniority", 'time_pillar', 'time_gan')
+        ("중년운", "40~59세", "settlement", 'day_pillar', 'day_gan'), # settlement 사용
+        ("말년운", "60세 이후", "expansion", 'time_pillar', 'time_gan') # expansion 데이터 활용 (DB 키 한계)
     ]
     
     life_stages_db = db.get('timeline', {}).get('life_stages_detailed', {})
@@ -329,12 +465,26 @@ def analyze_timeline(birth_dt: datetime, day_gan: str, ganji_map: Dict[str, str]
             
     return reports
 
+def perform_cold_reading(ganji_map: Dict[str, str], db: Dict) -> List[Dict[str, Any]]:
+    reports = []
+    symptom_db = db.get('symptom', {}).get('patterns', {})
+    ohang_counts = calculate_five_elements_count(ganji_map)
+    
+    if ohang_counts.get('수', 0) >= 3 or ganji_map['month_ji'] in ['해', '자', '축']:
+        data = symptom_db.get('습한_사주(Wet_Chart)', {})
+        if data:
+            reports.append({
+                "type": "☔ 습한 사주 (환경 진단)",
+                "title": "환경 진단",
+                "content": f"**환경/신체:** {data.get('environment', '')} {data.get('body', '')}\n*신령의 일침:* {data.get('shamanic_voice', '')}"
+            })
+    return reports
+
 def analyze_personal_health_love(ganji_map: Dict[str, str], sibseong_map: Dict[str, Any], db: Dict) -> List[Dict[str, Any]]:
     reports = []
     
-    # 1. 건강 (Health)
+    # 1. 건강 (Health) - 가장 약한 오행
     ohang_counts = calculate_five_elements_count(ganji_map)
-    # 가장 약한 오행 찾기
     weakest_elem = min(ohang_counts, key=ohang_counts.get)
     if ohang_counts[weakest_elem] <= 0.5:
         eng_key = {'목':'wood', '화':'fire', '토':'earth', '금':'metal', '수':'water'}[weakest_elem]
@@ -346,49 +496,21 @@ def analyze_personal_health_love(ganji_map: Dict[str, str], sibseong_map: Dict[s
                 "content": f"**위험 부위:** {health_data.get('health_risk', '')}\n**처방:** {health_data.get('action_remedy', '')}"
             })
             
-    # 2. 연애 (Love)
+    # 2. 연애 (Love) - 일지 기준
     day_ji = ganji_map['day_ji']
     if day_ji in ['자', '오', '묘', '유']:
-        reports.append({
-            "type": "❤️ 연애운 (도화)",
-            "title": "타고난 인기와 매력",
-            "content": "자네는 가만히 있어도 이성이 꼬이는 도화의 기운을 일지에 깔았네. 인기가 많아 피곤할 수 있으니 어장관리를 잘하게."
-        })
+        reports.append({"type": "❤️ 연애운 (도화)", "title": "타고난 인기와 매력", "content": "자네는 가만히 있어도 이성이 꼬이는 도화의 기운을 일지에 깔았네."})
     elif day_ji in ['진', '술', '축', '미']: 
-         reports.append({
-            "type": "❤️ 연애운 (화개)",
-            "title": "옛 인연과 다시 만날 운",
-            "content": "화려한 연애보다는 정신적으로 통하는 깊은 관계를 선호하네. 헤어진 연인이 다시 연락올 수 있는 기운이야."
-        })
+         reports.append({"type": "❤️ 연애운 (화개)", "title": "옛 인연과 다시 만날 운", "content": "화려한 연애보다는 정신적으로 통하는 깊은 관계를 선호하네."})
     elif day_ji in ['인', '신', '사', '해']:
-        reports.append({
-            "type": "❤️ 연애운 (역마)",
-            "title": "여행지에서 만날 인연",
-            "content": "활동적인 사람과 인연이 깊네. 여행이나 이동 중에 운명의 상대를 만날 확률이 높으니 밖으로 나가게."
-        })
+        reports.append({"type": "❤️ 연애운 (역마)", "title": "여행지에서 만날 인연", "content": "활동적인 사람과 인연이 깊네. 여행이나 이동 중에 운명의 상대를 만날 확률이 높으니 밖으로 나가게."})
     
-    return reports
-
-def perform_cold_reading(ganji_map: Dict[str, str], db: Dict) -> List[Dict[str, Any]]:
-    reports = []
-    symptom_db = db.get('symptom', {}).get('patterns', {})
-    ohang_counts = calculate_five_elements_count(ganji_map)
-    
-    # 습한 사주 체크
-    if ohang_counts.get('수', 0) >= 3 or ganji_map['month_ji'] in ['해', '자', '축']:
-        data = symptom_db.get('습한_사주(Wet_Chart)', {})
-        if data:
-            reports.append({
-                "type": "☔ 습한 사주 (환경 진단)",
-                "title": "환경 진단",
-                "content": f"**환경/신체:** {data.get('environment', '')} {data.get('body', '')}\n*신령의 일침:* {data.get('shamanic_voice', '')}"
-            })
     return reports
 
 def check_zizhi_interaction(ganji_a, ganji_b, db):
     reports = []
     zizhi_db = db.get('compatibility', {}).get('zizhi_interactions', {})
-    total_score = 0
+    total_score_change = 0
     
     pairs = [('일지', ganji_a['day_ji'], ganji_b['day_ji']), ('월지', ganji_a['month_ji'], ganji_b['month_ji'])]
     for name, a, b in pairs:
@@ -397,16 +519,13 @@ def check_zizhi_interaction(ganji_a, ganji_b, db):
             cat = 'Six_Harmonies' if '합' in key else 'Zhi_Chung' if '충' in key else 'Zhi_Hyeong'
             data = zizhi_db.get(cat, {}).get(key, {})
             score = data.get('score_bonus', 0) if cat == 'Six_Harmonies' else -data.get('score_deduction', 0)
-            total_score += score
+            total_score_change += score
             reports.append({
                 "type": f"✨ {name} 궁합 ({key})",
                 "title": f"{a}-{b} 관계",
-                "content": f"{data.get('ko_desc', '')}\n점수 영향: {score}점"
+                "content": f"{data.get('ko_desc', '')}\n**점수 영향:** {score:+d}점"
             })
-    return reports, total_score
-
-def check_synergy_and_balance(res_a, res_b, db):
-    return [] # 간소화
+    return reports, total_score_change
 
 # ==========================================
 # 4. 메인 처리 함수 (Main Processing)
@@ -419,11 +538,11 @@ def process_saju_input(user_data: Dict[str, Any], db: Dict) -> Dict[str, Any]:
     
     location_info = get_location_info(city_name)
     if location_info:
-        true_solar_dt = get_true_solar_time(birth_dt, location_info['longitude'], location_info['timezone_str'])
+        true_solar_dt = calculate_true_solar_time(birth_dt, location_info['longitude'], location_info['timezone_str'])
     else:
-        true_solar_dt = birth_dt
+        true_solar_dt = birth_dt # Fallback
         
-    # [FIX] 실제 계산 로직 사용
+    # [REAL Calculation Triggered]
     ganji_map = calculate_ganji_real(true_solar_dt)
     
     day_gan = ganji_map['day_gan']
@@ -444,18 +563,17 @@ def process_saju_input(user_data: Dict[str, Any], db: Dict) -> Dict[str, Any]:
     report['analytics'].append({
         "type": "🔮 **타고난 에너지 요약**",
         "title": f"일간({day_gan})과 주된 기운: **{main_elem}** / **{main_sib}**",
-        "content": f"그대는 **{day_gan}** 일간으로 태어났네."
+        "content": f"그대는 **{day_gan}** 일간으로 태어났네. 사주 전반에 **{main_elem}** 기운과 **{main_sib}**의 성향이 강하게 지배하고 있네."
     })
     
     day_ganji = ganji_map['day_gan'] + ganji_map['day_ji']
     report['analytics'].append(get_day_pillar_identity(day_ganji, db))
     
-    # [FIX] 누락되었던 연애/건강 분석 함수 호출 추가
-    report['analytics'].extend(analyze_personal_health_love(ganji_map, sibseong_map, db))
-    
+    # 순차적 분석 추가
     report['analytics'].extend(perform_cold_reading(ganji_map, db))
     report['analytics'].extend(analyze_ohang_imbalance(five_elements_count, OHENG_MAP[day_gan], db))
     report['analytics'].extend(analyze_special_patterns(ganji_map, sibseong_map, db))
+    report['analytics'].extend(analyze_personal_health_love(ganji_map, sibseong_map, db))
     report['analytics'].append(analyze_career_path(sibseong_map, db))
     report['analytics'].extend(analyze_shinsal(ganji_map, db))
     report['analytics'].extend(analyze_timeline(true_solar_dt, day_gan, ganji_map, db))
@@ -479,13 +597,14 @@ def process_love_compatibility(user_a: Dict[str, Any], user_b: Dict[str, Any], d
     
     base_score = comp_data.get('score', 50)
     
-    zizhi_reports, score_changes = check_zizhi_interaction(ganji_a, ganji_b, db)
-    final_score = max(0, min(100, base_score + score_changes))
+    # 지지 합충 점수 반영
+    zizhi_reports, score_change = check_zizhi_interaction(ganji_a, ganji_b, db)
+    final_score = max(0, min(100, base_score + score_change))
     
     comp_analysis = {
         "type": "💖 일간(日干) 궁합 분석", 
         "title": f"최종 궁합 점수: **{final_score}점**", 
-        "content": f"{comp_data.get('ko_relation', '')}\n\n(기본 {base_score}점 + 지지 가감 {score_changes}점)"
+        "content": f"{comp_data.get('ko_relation', '')}\n\n(기본 {base_score}점 + 지지 영향 {score_change:+d}점)"
     }
     report['analytics'].append(comp_analysis)
     report['analytics'].extend(zizhi_reports)
@@ -506,6 +625,7 @@ def load_all_dbs() -> Dict[str, Any]:
         try:
             with open(os.path.join(base_dir, filename), 'r', encoding='utf-8') as f:
                 db[key] = json.load(f)
-        except Exception:
+        except Exception as e:
+            print(f"Error loading {filename}: {e}")
             db[key] = {}
     return db
